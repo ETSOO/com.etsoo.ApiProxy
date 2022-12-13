@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\etsoo.snk</AssemblyOriginatorKeyFile>
+    <RepositoryType>Git</RepositoryType>
+    <RepositoryUrl>https://github.com/ETSOO/com.etsoo.ApiProxy</RepositoryUrl>
+    <Authors>ETSOO SmartERP NextGen Team</Authors>
+    <Company>ETSOO / 亿速思维</Company>
+    <Copyright>Copyright © ETSOO 2004 - 2022</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Description>ETSOO Api Proxy
+亿速思维接口代理</Description>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <Version>1.0.0</Version>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <FileVersion>1.0.1.0</FileVersion>
+    <PackageIcon>logo.png</PackageIcon>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\logo.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\com.etsoo.ApiModel\com.etsoo.ApiModel.csproj" />
+  </ItemGroup>
+
+</Project>
