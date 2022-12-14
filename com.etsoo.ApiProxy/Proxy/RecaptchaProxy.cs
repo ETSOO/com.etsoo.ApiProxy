@@ -1,15 +1,16 @@
 ﻿using com.etsoo.ApiModel.Dto.Recaptcha;
 using com.etsoo.ApiModel.RQ.Recaptcha;
+using com.etsoo.ApiProxy.Defs;
 using Microsoft.Extensions.Logging;
 using System.Net.Http.Json;
 
-namespace com.etsoo.ApiProxy
+namespace com.etsoo.ApiProxy.Proxy
 {
     /// <summary>
     /// reCaptcha API proxy
     /// https://developers.google.com/recaptcha/docs/v3
     /// </summary>
-    public class RecaptchaProxy
+    public class RecaptchaProxy : IRecaptchaProxy
     {
         private readonly ILogger _logger;
         private readonly HttpClient _httpClient;
@@ -24,6 +25,14 @@ namespace com.etsoo.ApiProxy
         {
             _httpClient = httpClient;
             _logger = logger;
+        }
+
+        public static void Setup(HttpClient client, string? domain = null)
+        {
+            if (string.IsNullOrEmpty(domain) || domain == "G") domain = "www.google.com";
+            else domain = "www.recaptcha.net";
+
+            client.BaseAddress = new Uri($"https://{domain}/recaptcha/api/");
         }
 
         /// <summary>

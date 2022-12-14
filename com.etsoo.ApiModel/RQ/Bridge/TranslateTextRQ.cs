@@ -1,7 +1,7 @@
 ﻿using com.etsoo.WebUtils.Attributes;
 using System.ComponentModel.DataAnnotations;
 
-namespace com.etsoo.ApiModel.RQ.Google
+namespace com.etsoo.ApiModel.RQ.Bridge
 {
     /// <summary>
     /// Translate text request data

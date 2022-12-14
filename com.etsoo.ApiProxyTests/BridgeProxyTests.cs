@@ -1,5 +1,5 @@
-﻿using com.etsoo.ApiModel.RQ.Google;
-using com.etsoo.ApiProxy;
+﻿using com.etsoo.ApiModel.RQ.Bridge;
+using com.etsoo.ApiProxy.Proxy;
 using com.etsoo.Testing.Mocks;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -8,11 +8,11 @@ using System.Net;
 namespace com.etsoo.ApiProxyTests
 {
     [TestClass]
-    public class GoogleProxyTests
+    public class BridgeProxyTests
     {
-        private readonly GoogleProxy proxy;
+        private readonly BridgeProxy proxy;
 
-        public GoogleProxyTests()
+        public BridgeProxyTests()
         {
             var httpClient = new HttpClient(new HttpMessageHandlerMock((request) =>
             {
@@ -35,7 +35,7 @@ namespace com.etsoo.ApiProxyTests
             {
                 BaseAddress = new Uri("https://localhost/api")
             };
-            proxy = new GoogleProxy(httpClient, Mock.Of<ILogger<GoogleProxy>>());
+            proxy = new BridgeProxy(httpClient, Mock.Of<ILogger<BridgeProxy>>());
         }
 
         [TestMethod]

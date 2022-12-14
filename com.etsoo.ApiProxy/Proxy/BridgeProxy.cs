@@ -1,14 +1,15 @@
-﻿using com.etsoo.ApiModel.RQ.Google;
+﻿using com.etsoo.ApiModel.RQ.Bridge;
+using com.etsoo.ApiProxy.Defs;
 using Microsoft.Extensions.Logging;
 using System.Net.Http.Json;
 
-namespace com.etsoo.ApiProxy
+namespace com.etsoo.ApiProxy.Proxy
 {
     /// <summary>
-    /// Google service proxy
-    /// 谷歌服务代理
+    /// Bridge service proxy
+    /// 桥接服务代理
     /// </summary>
-    public class GoogleProxy
+    public class BridgeProxy : IBridgeProxy
     {
         private readonly ILogger _logger;
         private readonly HttpClient _httpClient;
@@ -19,10 +20,18 @@ namespace com.etsoo.ApiProxy
         /// </summary>
         /// <param name="httpClient">HTTP client</param>
         /// <param name="logger">Logger</param>
-        public GoogleProxy(HttpClient httpClient, ILogger<GoogleProxy> logger)
+        public BridgeProxy(HttpClient httpClient, ILogger<BridgeProxy> logger)
         {
             _httpClient = httpClient;
             _logger = logger;
+        }
+
+        public static void Setup(HttpClient client, string? domain = null)
+        {
+            if (string.IsNullOrEmpty(domain)) domain = "hk";
+            if (domain.Length < 6) domain = $"https://{domain}api.etsoo.com/api/";
+
+            client.BaseAddress = new Uri(domain);
         }
 
         /// <summary>

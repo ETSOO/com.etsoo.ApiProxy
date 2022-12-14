@@ -1,6 +1,6 @@
 ﻿using com.etsoo.ApiModel.Dto.Recaptcha;
 using com.etsoo.ApiModel.RQ.Recaptcha;
-using com.etsoo.ApiProxy;
+using com.etsoo.ApiProxy.Proxy;
 using Microsoft.Extensions.Logging;
 using Moq;
 
@@ -13,10 +13,8 @@ namespace com.etsoo.ApiProxyTests
 
         public RecaptchaProxyTests()
         {
-            var httpClient = new HttpClient()
-            {
-                BaseAddress = new Uri("https://www.google.com/recaptcha/api/")
-            };
+            var httpClient = new HttpClient();
+            RecaptchaProxy.Setup(httpClient);
             proxy = new RecaptchaProxy(httpClient, Mock.Of<ILogger<RecaptchaProxy>>());
         }
 
