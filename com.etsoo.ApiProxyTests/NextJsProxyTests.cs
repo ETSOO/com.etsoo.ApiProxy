@@ -1,5 +1,7 @@
-﻿using com.etsoo.ApiProxy.Proxy;
+﻿using com.etsoo.ApiProxy.Configs;
+using com.etsoo.ApiProxy.Proxy;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Moq;
 
 namespace com.etsoo.ApiProxyTests
@@ -15,8 +17,11 @@ namespace com.etsoo.ApiProxyTests
             {
                 Timeout = TimeSpan.FromSeconds(5)
             };
-            NextJsProxy.Setup(httpClient, "abc", "http://localhost:3000");
-            proxy = new NextJsProxy(httpClient, Mock.Of<ILogger<NextJsProxy>>());
+            proxy = new NextJsProxy(httpClient, Mock.Of<ILogger<NextJsProxy>>(), new OptionsWrapper<NextJsOptions>(new()
+            {
+                BaseAddress = "http://localhost:3000",
+                Token = "abc"
+            }));
         }
 
         [TestMethod]

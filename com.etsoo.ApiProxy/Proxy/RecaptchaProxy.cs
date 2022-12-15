@@ -1,7 +1,9 @@
 ﻿using com.etsoo.ApiModel.Dto.Recaptcha;
 using com.etsoo.ApiModel.RQ.Recaptcha;
+using com.etsoo.ApiProxy.Configs;
 using com.etsoo.ApiProxy.Defs;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System.Net.Http.Json;
 
 namespace com.etsoo.ApiProxy.Proxy
@@ -14,6 +16,7 @@ namespace com.etsoo.ApiProxy.Proxy
     {
         private readonly ILogger _logger;
         private readonly HttpClient _httpClient;
+        private readonly string secret;
 
         /// <summary>
         /// Constructor
@@ -21,16 +24,21 @@ namespace com.etsoo.ApiProxy.Proxy
         /// </summary>
         /// <param name="httpClient">HTTP client</param>
         /// <param name="logger">Logger</param>
-        public RecaptchaProxy(HttpClient httpClient, ILogger<RecaptchaProxy> logger)
+        /// <param name="options">Options</param>
+        public RecaptchaProxy(HttpClient httpClient, ILogger<RecaptchaProxy> logger, IOptions<RecaptchaOptions> options)
         {
+            secret = options.Value.Secret;
+            Setup(httpClient, options.Value);
+
             _httpClient = httpClient;
             _logger = logger;
         }
 
-        public static void Setup(HttpClient client, string? domain = null)
+        public static void Setup(HttpClient client, RecaptchaOptions options)
         {
+            var domain = options.BaseAddress;
             if (string.IsNullOrEmpty(domain) || domain == "G") domain = "www.google.com";
-            else domain = "www.recaptcha.net";
+            else if (domain == "R") domain = "www.recaptcha.net";
 
             client.BaseAddress = new Uri($"https://{domain}/recaptcha/api/");
         }
@@ -45,7 +53,7 @@ namespace com.etsoo.ApiProxy.Proxy
         {
             var data = new Dictionary<string, string>
             {
-                [nameof(rq.Secret).ToLower()] = rq.Secret,
+                [nameof(secret)] = secret,
                 [nameof(rq.Response).ToLower()] = rq.Response
             };
 

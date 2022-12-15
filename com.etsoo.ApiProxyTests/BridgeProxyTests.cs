@@ -1,7 +1,9 @@
 ﻿using com.etsoo.ApiModel.RQ.Bridge;
+using com.etsoo.ApiProxy.Configs;
 using com.etsoo.ApiProxy.Proxy;
 using com.etsoo.Testing.Mocks;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Moq;
 using System.Net;
 
@@ -31,11 +33,11 @@ namespace com.etsoo.ApiProxyTests
                 {
                     StatusCode = HttpStatusCode.NotFound
                 };
-            }))
+            }));
+            proxy = new BridgeProxy(httpClient, Mock.Of<ILogger<BridgeProxy>>(), new OptionsWrapper<BridgeOptions>(new()
             {
-                BaseAddress = new Uri("https://localhost/api")
-            };
-            proxy = new BridgeProxy(httpClient, Mock.Of<ILogger<BridgeProxy>>());
+                BaseAddress = "https://localhost/api"
+            }));
         }
 
         [TestMethod]

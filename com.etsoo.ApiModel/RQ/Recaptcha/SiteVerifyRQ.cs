@@ -9,12 +9,6 @@ namespace com.etsoo.ApiModel.RQ.Recaptcha
     public class SiteVerifyRQ
     {
         /// <summary>
-        /// The shared key between your site and reCAPTCHA
-        /// </summary>
-        [Required]
-        public string Secret { get; init; } = default!;
-
-        /// <summary>
         /// The user response token provided by the reCAPTCHA client-side integration on your site
         /// </summary>
         [Required]

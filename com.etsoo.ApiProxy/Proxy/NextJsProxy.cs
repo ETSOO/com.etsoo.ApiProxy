@@ -1,6 +1,8 @@
-﻿using com.etsoo.ApiProxy.Defs;
+﻿using com.etsoo.ApiProxy.Configs;
+using com.etsoo.ApiProxy.Defs;
 using com.etsoo.Utils.Actions;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Web;
@@ -22,18 +24,22 @@ namespace com.etsoo.ApiProxy.Proxy
         /// </summary>
         /// <param name="httpClient">HTTP client</param>
         /// <param name="logger">Logger</param>
-        public NextJsProxy(HttpClient httpClient, ILogger<NextJsProxy> logger)
+        /// <param name="options">Options</param>
+        public NextJsProxy(HttpClient httpClient, ILogger<NextJsProxy> logger, IOptions<NextJsOptions> options)
         {
+            Setup(httpClient, options.Value);
+
             _httpClient = httpClient;
             _logger = logger;
         }
 
-        public static void Setup(HttpClient client, string token, string? domain = null)
+        private void Setup(HttpClient client, NextJsOptions options)
         {
+            var domain = options.BaseAddress;
             if (string.IsNullOrEmpty(domain)) domain = "http://localhost";
 
             client.BaseAddress = new Uri(domain);
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("NextJsToken", token);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("NextJsToken", options.Token);
         }
 
         /// <summary>

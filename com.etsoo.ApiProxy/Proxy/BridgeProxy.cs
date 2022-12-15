@@ -1,6 +1,8 @@
 ﻿using com.etsoo.ApiModel.RQ.Bridge;
+using com.etsoo.ApiProxy.Configs;
 using com.etsoo.ApiProxy.Defs;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System.Net.Http.Json;
 
 namespace com.etsoo.ApiProxy.Proxy
@@ -20,14 +22,19 @@ namespace com.etsoo.ApiProxy.Proxy
         /// </summary>
         /// <param name="httpClient">HTTP client</param>
         /// <param name="logger">Logger</param>
-        public BridgeProxy(HttpClient httpClient, ILogger<BridgeProxy> logger)
+        /// <param name="options">Options</param>
+        public BridgeProxy(HttpClient httpClient, ILogger<BridgeProxy> logger, IOptions<BridgeOptions> options)
         {
+            Setup(httpClient, options.Value);
+
             _httpClient = httpClient;
             _logger = logger;
         }
 
-        public static void Setup(HttpClient client, string? domain = null)
+        private void Setup(HttpClient client, BridgeOptions options)
         {
+            var domain = options.BaseAddress;
+
             if (string.IsNullOrEmpty(domain)) domain = "hk";
             if (domain.Length < 6) domain = $"https://{domain}api.etsoo.com/api/";
 
