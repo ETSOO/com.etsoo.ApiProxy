@@ -6,7 +6,7 @@
     /// </summary>
     public class NextJsOptions : IProxyOptions
     {
-        public static string SectionName => "EtsooProxy:NextJs";
+        public const string SectionName = "EtsooProxy:NextJs";
 
         public string? BaseAddress { get; init; }
         public string Token { get; init; } = default!;

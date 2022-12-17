@@ -6,7 +6,7 @@
     /// </summary>
     public class BridgeOptions : IProxyOptions
     {
-        public static string SectionName => "EtsooProxy:Bridge";
+        public const string SectionName = "EtsooProxy:Bridge";
 
         public string? BaseAddress { get; init; }
     }

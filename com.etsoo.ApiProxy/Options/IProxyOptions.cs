@@ -7,8 +7,6 @@
     /// </summary>
     public interface IProxyOptions
     {
-        static abstract string SectionName { get; }
-
         string? BaseAddress { get; init; }
     }
 }
