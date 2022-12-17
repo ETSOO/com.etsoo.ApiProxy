@@ -23,12 +23,24 @@ namespace com.etsoo.ApiProxy.Proxy
         /// <param name="httpClient">HTTP client</param>
         /// <param name="logger">Logger</param>
         /// <param name="options">Options</param>
-        public BridgeProxy(HttpClient httpClient, ILogger<BridgeProxy> logger, IOptions<BridgeOptions> options)
+        public BridgeProxy(HttpClient httpClient, ILogger logger, BridgeOptions options)
         {
-            Setup(httpClient, options.Value);
+            Setup(httpClient, options);
 
             _httpClient = httpClient;
             _logger = logger;
+        }
+
+        /// <summary>
+        /// Constructor
+        /// 构造函数
+        /// </summary>
+        /// <param name="httpClient">HTTP client</param>
+        /// <param name="logger">Logger</param>
+        /// <param name="options">Options</param>
+        public BridgeProxy(HttpClient httpClient, ILogger<BridgeProxy> logger, IOptions<BridgeOptions> options)
+            : this(httpClient, logger, options.Value)
+        {
         }
 
         private void Setup(HttpClient client, BridgeOptions options)

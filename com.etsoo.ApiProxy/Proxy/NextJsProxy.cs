@@ -25,12 +25,24 @@ namespace com.etsoo.ApiProxy.Proxy
         /// <param name="httpClient">HTTP client</param>
         /// <param name="logger">Logger</param>
         /// <param name="options">Options</param>
-        public NextJsProxy(HttpClient httpClient, ILogger<NextJsProxy> logger, IOptions<NextJsOptions> options)
+        public NextJsProxy(HttpClient httpClient, ILogger logger, NextJsOptions options)
         {
-            Setup(httpClient, options.Value);
+            Setup(httpClient, options);
 
             _httpClient = httpClient;
             _logger = logger;
+        }
+
+        /// <summary>
+        /// Constructor
+        /// 构造函数
+        /// </summary>
+        /// <param name="httpClient">HTTP client</param>
+        /// <param name="logger">Logger</param>
+        /// <param name="options">Options</param>
+        public NextJsProxy(HttpClient httpClient, ILogger<NextJsProxy> logger, IOptions<NextJsOptions> options)
+            : this(httpClient, logger, options.Value)
+        {
         }
 
         private void Setup(HttpClient client, NextJsOptions options)

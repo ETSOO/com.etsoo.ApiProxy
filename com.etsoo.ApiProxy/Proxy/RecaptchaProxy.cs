@@ -25,13 +25,25 @@ namespace com.etsoo.ApiProxy.Proxy
         /// <param name="httpClient">HTTP client</param>
         /// <param name="logger">Logger</param>
         /// <param name="options">Options</param>
-        public RecaptchaProxy(HttpClient httpClient, ILogger<RecaptchaProxy> logger, IOptions<RecaptchaOptions> options)
+        public RecaptchaProxy(HttpClient httpClient, ILogger logger, RecaptchaOptions options)
         {
-            secret = options.Value.Secret;
-            Setup(httpClient, options.Value);
+            secret = options.Secret;
+            Setup(httpClient, options);
 
             _httpClient = httpClient;
             _logger = logger;
+        }
+
+        /// <summary>
+        /// Constructor
+        /// 构造函数
+        /// </summary>
+        /// <param name="httpClient">HTTP client</param>
+        /// <param name="logger">Logger</param>
+        /// <param name="options">Options</param>
+        public RecaptchaProxy(HttpClient httpClient, ILogger<RecaptchaProxy> logger, IOptions<RecaptchaOptions> options)
+            : this(httpClient, logger, options.Value)
+        {
         }
 
         public static void Setup(HttpClient client, RecaptchaOptions options)
