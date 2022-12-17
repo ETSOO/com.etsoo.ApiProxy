@@ -1,6 +1,7 @@
 ﻿using com.etsoo.ApiProxy.Configs;
 using com.etsoo.ApiProxy.Defs;
 using com.etsoo.Utils.Actions;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Net.Http.Headers;
@@ -40,6 +41,7 @@ namespace com.etsoo.ApiProxy.Proxy
         /// <param name="httpClient">HTTP client</param>
         /// <param name="logger">Logger</param>
         /// <param name="options">Options</param>
+        [ActivatorUtilitiesConstructor]
         public NextJsProxy(HttpClient httpClient, ILogger<NextJsProxy> logger, IOptions<NextJsOptions> options)
             : this(httpClient, logger, options.Value)
         {

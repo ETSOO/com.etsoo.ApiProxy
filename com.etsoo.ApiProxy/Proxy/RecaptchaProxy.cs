@@ -2,6 +2,7 @@
 using com.etsoo.ApiModel.RQ.Recaptcha;
 using com.etsoo.ApiProxy.Configs;
 using com.etsoo.ApiProxy.Defs;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Net.Http.Json;
@@ -41,6 +42,7 @@ namespace com.etsoo.ApiProxy.Proxy
         /// <param name="httpClient">HTTP client</param>
         /// <param name="logger">Logger</param>
         /// <param name="options">Options</param>
+        [ActivatorUtilitiesConstructor]
         public RecaptchaProxy(HttpClient httpClient, ILogger<RecaptchaProxy> logger, IOptions<RecaptchaOptions> options)
             : this(httpClient, logger, options.Value)
         {
