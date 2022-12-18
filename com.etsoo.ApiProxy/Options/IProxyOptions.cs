@@ -7,6 +7,10 @@
     /// </summary>
     public interface IProxyOptions
     {
+        /// <summary>
+        /// Base address of the client
+        /// 客户端的基地址
+        /// </summary>
         string? BaseAddress { get; init; }
     }
 }

@@ -6,8 +6,22 @@
     /// </summary>
     public class NextJsOptions : IProxyOptions
     {
+        /// <summary>
+        /// Name
+        /// 名称
+        /// </summary>
+        public const string Name = "NextJs";
+
+        /// <summary>
+        /// Configuration section name
+        /// 配置节名称
+        /// </summary>
         public const string SectionName = "EtsooProxy:NextJs";
 
+        /// <summary>
+        /// Base address of the client
+        /// 客户端的基地址
+        /// </summary>
         public string? BaseAddress { get; init; }
         public string Token { get; init; } = default!;
     }
