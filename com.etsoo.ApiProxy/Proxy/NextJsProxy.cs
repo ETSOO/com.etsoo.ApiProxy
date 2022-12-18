@@ -70,7 +70,7 @@ namespace com.etsoo.ApiProxy.Proxy
                 var response = await _httpClient.GetAsync($"api/revalidate?{p}");
                 if (response.IsSuccessStatusCode)
                 {
-                    return await response.Content.ReadFromJsonAsync<IActionResult>() ?? new ActionResult { Title = "No Content" };
+                    return await response.Content.ReadFromJsonAsync<ActionResult>() ?? new ActionResult { Title = "No Content" };
                 }
                 else
                 {
