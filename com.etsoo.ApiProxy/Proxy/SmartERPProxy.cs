@@ -1,5 +1,6 @@
 ﻿using com.etsoo.ApiModel.Dto.SmartERP;
 using com.etsoo.ApiModel.RQ.SmartERP;
+using com.etsoo.ApiProxy.Defs;
 using com.etsoo.ApiProxy.Options;
 using com.etsoo.Utils;
 using Microsoft.Extensions.Caching.Memory;
@@ -14,7 +15,7 @@ namespace com.etsoo.ApiProxy.Proxy
     /// SmartERP service proxy
     /// SmartERP 服务代理
     /// </summary>
-    public class SmartERPProxy
+    public class SmartERPProxy : ISmartERPProxy
     {
         const string identifier = "com.etsoo.ApiProxy.Proxy.SmartERPProxy";
 
