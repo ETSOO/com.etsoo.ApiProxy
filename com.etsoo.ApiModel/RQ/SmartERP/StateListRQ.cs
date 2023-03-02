@@ -15,7 +15,7 @@ namespace com.etsoo.ApiModel.RQ.SmartERP
         /// </summary>
         [RegionId]
         [Required]
-        public string RegionId { get; init; } = null!;
+        public required string RegionId { get; init; }
 
         /// <summary>
         /// Language

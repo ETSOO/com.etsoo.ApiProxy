@@ -6,7 +6,7 @@ namespace com.etsoo.ApiModel.Dto.Recaptcha
     /// Site verification result data
     /// 站点验证结果数据
     /// </summary>
-    public class SiteVerifyDto
+    public record SiteVerifyDto
     {
         public const string MissingInputSecret = "missing-input-secret";
         public const string InvalidInputSecret = "invalid-input-secret";
@@ -15,13 +15,13 @@ namespace com.etsoo.ApiModel.Dto.Recaptcha
         public const string BadRequest = "bad-request";
         public const string TimeoutOrDuplicate = "timeout-or-duplicate";
 
-        public bool Success { get; init; }
+        public required bool Success { get; init; }
 
         /// <summary>
         /// Timestamp of the challenge load (ISO format yyyy-MM-dd'T'HH:mm:ssZZ)
         /// </summary>
         [JsonPropertyName("challenge_ts")]
-        public string ChallengeTs { get; init; } = default!;
+        public string? ChallengeTs { get; init; }
 
         /// <summary>
         /// The hostname of the site where the reCAPTCHA was solved

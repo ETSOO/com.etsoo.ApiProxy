@@ -4,31 +4,31 @@
     /// Address region data
     /// 国家或地区数据
     /// </summary>
-    public class AddressRegionDto
+    public record AddressRegionDto
     {
         /// <summary>
         /// Id, like CN for China
         /// 国家编号
         /// </summary>
-        public string Id { get; init; } = default!;
+        public required string Id { get; init; }
 
         /// <summary>
         /// Number id, like 156 for China
         /// 数字编号
         /// </summary>
-        public string Nid { get; init; } = default!;
+        public required string Nid { get; init; }
 
         /// <summary>
         /// Continent id
         /// 洲编号
         /// </summary>
-        public string ContinentId { get; init; } = default!;
+        public required string ContinentId { get; init; }
 
         /// <summary>
         /// Phone exit code for international dial, like 00 in China
         /// 国际拨号的电话退出代码
         /// </summary>
-        public string ExitCode { get; init; } = default!;
+        public required string ExitCode { get; init; }
 
         /// <summary>
         /// National (truck) prefix
@@ -40,19 +40,19 @@
         /// Area code for international dial, like 86 for China
         /// 国际电话区号
         /// </summary>
-        public string Idd { get; init; } = default!;
+        public required string Idd { get; init; }
 
         /// <summary>
         /// Currency, like CNY for China's currency
         /// 币种
         /// </summary>
-        public string Currency { get; init; } = default!;
+        public required string Currency { get; init; }
 
         /// <summary>
         /// Label
         /// 标签
         /// </summary>
-        public string Label { get; init; } = default!;
+        public required string Label { get; init; }
 
         /// <summary>
         /// Pinyin or other query assistant data

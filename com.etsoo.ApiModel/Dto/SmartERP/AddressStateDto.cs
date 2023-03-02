@@ -4,13 +4,13 @@
     /// Address state data
     /// 省州地址数据
     /// </summary>
-    public class AddressStateDto
+    public record AddressStateDto
     {
         /// <summary>
         /// Id
         /// 编号
         /// </summary>
-        public string Id { get; init; } = default!;
+        public required string Id { get; init; }
 
         /// <summary>
         /// Abbreviation
@@ -22,6 +22,6 @@
         /// Label
         /// 标签
         /// </summary>
-        public string Label { get; init; } = default!;
+        public required string Label { get; init; }
     }
 }

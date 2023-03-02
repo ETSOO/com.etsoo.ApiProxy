@@ -4,18 +4,18 @@
     /// Currency data
     /// 币种数据
     /// </summary>
-    public class CurrencyDto : ExchangeRateDto
+    public record CurrencyDto : ExchangeRateDto
     {
         /// <summary>
         /// Currency id, like CNY, USD
         /// 币种编号，比如 CNY = 人民币, USD = 美元
         /// </summary>
-        public string Id { get; init; } = default!;
+        public required string Id { get; init; }
 
         /// <summary>
         /// Label
         /// 标签
         /// </summary>
-        public string Label { get; init; } = default!;
+        public required string Label { get; init; }
     }
 }

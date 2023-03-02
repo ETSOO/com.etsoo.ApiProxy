@@ -55,7 +55,7 @@ namespace com.etsoo.ApiModel.RQ.SmartERP
         /// Content
         /// 内容
         /// </summary>
-        public string Content { get; init; } = string.Empty;
+        public required string Content { get; init; }
 
         /// <summary>
         /// Width

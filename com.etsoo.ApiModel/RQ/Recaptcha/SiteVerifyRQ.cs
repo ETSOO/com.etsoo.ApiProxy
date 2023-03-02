@@ -6,13 +6,13 @@ namespace com.etsoo.ApiModel.RQ.Recaptcha
     /// Site verification request data
     /// 站点验证请求数据
     /// </summary>
-    public class SiteVerifyRQ
+    public record SiteVerifyRQ
     {
         /// <summary>
         /// The user response token provided by the reCAPTCHA client-side integration on your site
         /// </summary>
         [Required]
-        public string Response { get; init; } = default!;
+        public required string Response { get; init; }
 
         /// <summary>
         /// The user's IP address
