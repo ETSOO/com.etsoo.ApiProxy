@@ -6,7 +6,7 @@
     /// </summary>
     /// <param name="Lat">Latitude, 维度</param>
     /// <param name="Lng">Longitude, 经度</param>
-    public record Location(float Lat, float Lng)
+    public record Location(double Lat, double Lng)
     {
         public override string ToString()
         {

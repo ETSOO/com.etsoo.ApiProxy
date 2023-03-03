@@ -13,9 +13,9 @@
         public required string PlaceId { get; init; }
 
         /// <summary>
-        /// Place description
-        /// 地名描述
+        /// Place name
+        /// 地名
         /// </summary>
-        public required string Description { get; init; }
+        public required string Name { get; init; }
     }
 }
