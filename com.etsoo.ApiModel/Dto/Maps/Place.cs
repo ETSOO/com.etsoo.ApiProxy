@@ -34,13 +34,13 @@
         /// Region
         /// 地区
         /// </summary>
-        public required string Region { get; init; }
+        public string? Region { get; init; }
 
         /// <summary>
         /// State
         /// 州省
         /// </summary>
-        public required string State { get; init; }
+        public string? State { get; init; }
 
         /// <summary>
         /// City
