@@ -10,12 +10,12 @@
     <RepositoryUrl>https://github.com/ETSOO/com.etsoo.ApiModel</RepositoryUrl>
     <Authors>ETSOO SmartERP NextGen Team</Authors>
     <Company>ETSOO / 亿速思维</Company>
-    <Copyright>Copyright © ETSOO 2004 - 2022</Copyright>
+    <Copyright>Copyright © ETSOO 2004 - 2023</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Description>ETSOO Api Data Model
 亿速思维接口数据模型</Description>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
-    <Version>1.0.9</Version>
+    <Version>1.0.10</Version>
     <AssemblyVersion>1.0.1.0</AssemblyVersion>
     <FileVersion>1.0.1.0</FileVersion>
     <PackageIcon>logo.png</PackageIcon>
@@ -30,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="com.etsoo.WebUtils" Version="1.0.27" />
+    <PackageReference Include="com.etsoo.WebUtils" Version="1.0.29" />
   </ItemGroup>
 
 </Project>
