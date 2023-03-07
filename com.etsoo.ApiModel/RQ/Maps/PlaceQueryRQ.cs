@@ -15,6 +15,12 @@ namespace com.etsoo.ApiModel.RQ.Maps
         public required string Query { get; init; }
 
         /// <summary>
+        /// Output type
+        /// 输出类型
+        /// </summary>
+        public ApiOutput Output { get; init; } = ApiOutput.JSON;
+
+        /// <summary>
         /// Language, like zh-CN
         /// 语言
         /// </summary>

@@ -17,5 +17,11 @@
         /// 地名
         /// </summary>
         public required string Name { get; init; }
+
+        /// <summary>
+        /// Other place data
+        /// 其他地点数据
+        /// </summary>
+        public PlaceBase? Place { get; init; }
     }
 }
