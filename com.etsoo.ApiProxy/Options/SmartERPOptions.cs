@@ -25,5 +25,11 @@ namespace com.etsoo.ApiProxy.Options
         /// 客户端的基地址
         /// </summary>
         public string? BaseAddress { get; init; }
+
+        /// <summary>
+        /// Cache hours
+        /// 缓存小时数
+        /// </summary>
+        public double CacheHours { get; init; } = 24;
     }
 }

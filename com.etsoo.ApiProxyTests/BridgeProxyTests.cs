@@ -1,7 +1,8 @@
-﻿using com.etsoo.ApiModel.RQ.Bridge;
-using com.etsoo.ApiProxy.Configs;
+﻿using com.etsoo.ApiProxy.Configs;
 using com.etsoo.ApiProxy.Proxy;
+using com.etsoo.GoogleApi.Cloud.RQ;
 using com.etsoo.Testing.Mocks;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
@@ -37,7 +38,7 @@ namespace com.etsoo.ApiProxyTests
             proxy = new BridgeProxy(httpClient, Mock.Of<ILogger<BridgeProxy>>(), new OptionsWrapper<BridgeOptions>(new()
             {
                 BaseAddress = "https://localhost/api"
-            }));
+            }), Mock.Of<IDistributedCache>());
         }
 
         [TestMethod]

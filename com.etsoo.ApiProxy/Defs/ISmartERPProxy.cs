@@ -48,5 +48,21 @@ namespace com.etsoo.ApiProxy.Defs
         /// <param name="rq">Request data</param>
         /// <returns>Task</returns>
         Task<IEnumerable<AddressStateDto>?> StateListAsync(StateListRQ rq);
+
+        /// <summary>
+        /// City list
+        /// 城市列表
+        /// </summary>
+        /// <param name="rq">Request data</param>
+        /// <returns>Task</returns>
+        Task<IEnumerable<AddressCityDto>?> CityListAsync(CityListRQ rq);
+
+        /// <summary>
+        /// District list
+        /// 区县列表
+        /// </summary>
+        /// <param name="rq">Request data</param>
+        /// <returns>Task</returns>
+        Task<IEnumerable<AddressDistrictDto>?> DistrictListAsync(DistrictListRQ rq);
     }
 }

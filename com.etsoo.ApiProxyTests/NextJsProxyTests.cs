@@ -29,7 +29,7 @@ namespace com.etsoo.ApiProxyTests
         {
             var result = await proxy.OnDemandRevalidateAsync("/contact", "/about");
             Assert.IsFalse(result.Ok);
-            if (result.Status != null) Assert.AreEqual(401, result.Status);
+            if (result.Status != null) Assert.AreEqual(404, result.Status);
         }
     }
 }

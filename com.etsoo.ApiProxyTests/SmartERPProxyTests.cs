@@ -1,7 +1,9 @@
 ﻿using com.etsoo.ApiModel.RQ.SmartERP;
 using com.etsoo.ApiModel.Utils;
+using com.etsoo.ApiProxy.Defs;
 using com.etsoo.ApiProxy.Options;
 using com.etsoo.ApiProxy.Proxy;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
@@ -11,7 +13,7 @@ namespace com.etsoo.ApiProxyTests
     [TestClass]
     public class SmartERPProxyTests
     {
-        private readonly SmartERPProxy proxy;
+        private readonly ISmartERPProxy proxy;
 
         public SmartERPProxyTests()
         {
@@ -19,7 +21,7 @@ namespace com.etsoo.ApiProxyTests
             proxy = new SmartERPProxy(httpClient, Mock.Of<ILogger<SmartERPProxy>>(), new OptionsWrapper<SmartERPOptions>(new()
             {
                 BaseAddress = "http://localhost/com.etsoo.SmartERPApi/api/"
-            }));
+            }), Mock.Of<IDistributedCache>());
         }
 
         [TestMethod]
@@ -65,6 +67,20 @@ namespace com.etsoo.ApiProxyTests
         {
             var states = await proxy.StateListAsync(new StateListRQ { RegionId = "CN", Language = "zh-CN" });
             Assert.AreEqual("鲁", states?.FirstOrDefault(r => r.Label == "山东")?.Abbr);
+        }
+
+        [TestMethod]
+        public async Task CityListAsyncTests()
+        {
+            var cities = await proxy.CityListAsync(new CityListRQ { StateId = "CNHN", Language = "zh-CN" });
+
+            var cs = cities?.FirstOrDefault(r => r.Label == "长沙市");
+            Assert.IsNotNull(cs);
+
+            Assert.AreEqual("4301", cs.Num);
+
+            var districts = await proxy.DistrictListAsync(new DistrictListRQ { CityId = cs.Id, Language = "zh-CN" });
+            Assert.IsTrue(districts?.Any(d => d.Label.StartsWith("宁乡")));
         }
     }
 }
