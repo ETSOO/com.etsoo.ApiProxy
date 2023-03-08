@@ -9,7 +9,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Net.Http.Json;
-using System.Text.Json;
 
 namespace com.etsoo.ApiProxy.Proxy
 {
@@ -117,7 +116,7 @@ namespace com.etsoo.ApiProxy.Proxy
             return await CacheFactory.DoStringAsync(
                 _cache,
                 _cacheHours,
-                () => $"{identifier}.{nameof(QRCodeAsync)}.{JsonSerializer.Serialize(rq)}",
+                () => $"{identifier}.{nameof(QRCodeAsync)}.{rq}",
                 async () =>
                 {
                     var response = await _httpClient.PostAsJsonAsync("Public/QRCode", rq, SharedUtils.JsonDefaultSerializerOptions);

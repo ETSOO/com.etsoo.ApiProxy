@@ -1,4 +1,5 @@
-﻿using com.etsoo.GoogleApi.Cloud.RQ;
+﻿using com.etsoo.ApiModel.Dto.Maps;
+using com.etsoo.GoogleApi.Cloud.RQ;
 using com.etsoo.GoogleApi.Maps.Place;
 using com.etsoo.GoogleApi.Maps.Place.RQ;
 
@@ -33,6 +34,14 @@ namespace com.etsoo.ApiProxy.Defs
         /// <param name="rq">Request data</param>
         /// <returns>Result</returns>
         Task<SearchPlaceResponse?> SearchPlaceAsync(SearchPlaceRQ rq);
+
+        /// <summary>
+        /// Async search common place
+        /// 异步查询通用地点
+        /// </summary>
+        /// <param name="rq">Request data</param>
+        /// <returns>Result</returns>
+        Task<IEnumerable<PlaceCommon>?> SearchCommonPlaceAsync(SearchPlaceRQ rq);
 
         /// <summary>
         /// Async get place details

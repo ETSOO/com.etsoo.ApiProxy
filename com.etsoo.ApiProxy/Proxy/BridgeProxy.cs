@@ -1,4 +1,5 @@
-﻿using com.etsoo.ApiProxy.Configs;
+﻿using com.etsoo.ApiModel.Dto.Maps;
+using com.etsoo.ApiProxy.Configs;
 using com.etsoo.ApiProxy.Defs;
 using com.etsoo.GoogleApi.Cloud.RQ;
 using com.etsoo.GoogleApi.Maps.Place;
@@ -107,6 +108,20 @@ namespace com.etsoo.ApiProxy.Proxy
             response.EnsureSuccessStatusCode();
 
             return await response.Content.ReadFromJsonAsync<SearchPlaceResponse>();
+        }
+
+        /// <summary>
+        /// Async search common place
+        /// 异步查询通用地点
+        /// </summary>
+        /// <param name="rq">Request data</param>
+        /// <returns>Result</returns>
+        public async Task<IEnumerable<PlaceCommon>?> SearchCommonPlaceAsync(SearchPlaceRQ rq)
+        {
+            var response = await _httpClient.PostAsJsonAsync("Google/SearchCommonPlace", rq);
+            response.EnsureSuccessStatusCode();
+
+            return await response.Content.ReadFromJsonAsync<IEnumerable<PlaceCommon>>();
         }
 
         /// <summary>

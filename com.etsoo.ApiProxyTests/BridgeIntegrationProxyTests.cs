@@ -55,6 +55,15 @@ namespace com.etsoo.ApiProxyTests
         }
 
         [TestMethod]
+        public async Task SearchCommonPlaceAsyncTest()
+        {
+            var result = await proxy.SearchCommonPlaceAsync(new SearchPlaceRQ { Query = "12a Cranbrook" });
+            var first = result?.FirstOrDefault();
+            Assert.IsNotNull(first);
+            Assert.AreEqual("NZ", first.Region);
+        }
+
+        [TestMethod]
         public async Task TranslateTextAsyncSuccessTests()
         {
             var rq = new TranslateTextRQ { Text = "中国" };
