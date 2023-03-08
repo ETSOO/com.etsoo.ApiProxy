@@ -44,10 +44,10 @@
     }
 
     /// <summary>
-    /// Place data
-    /// 地点数据
+    /// Common place data
+    /// 通用地点数据
     /// </summary>
-    public record Place : PlaceBase
+    public record PlaceCommon : PlaceBase
     {
         /// <summary>
         /// Place id
