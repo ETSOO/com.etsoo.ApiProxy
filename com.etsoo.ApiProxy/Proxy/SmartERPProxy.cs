@@ -90,11 +90,12 @@ namespace com.etsoo.ApiProxy.Proxy
         /// 获取地点细节
         /// </summary>
         /// <param name="replaceId">Place id</param>
+        /// <param name="language">Language</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Result</returns>
-        public async Task<PlaceCommon?> GetPlaceDetailsAsync(string replaceId, CancellationToken cancellationToken = default)
+        public async Task<PlaceCommon?> GetPlaceDetailsAsync(string replaceId, string? language = null, CancellationToken cancellationToken = default)
         {
-            return await _httpClient.GetFromJsonAsync<PlaceCommon>($"Address/GetPlaceDetails/{HttpUtility.UrlEncode(replaceId)}", SharedUtils.JsonDefaultSerializerOptions, cancellationToken);
+            return await _httpClient.GetFromJsonAsync<PlaceCommon>($"Address/GetPlaceDetails/{HttpUtility.UrlEncode(replaceId)}/{(language == null ? string.Empty : HttpUtility.UrlEncode(language))}", SharedUtils.JsonDefaultSerializerOptions, cancellationToken);
         }
 
         /// <summary>

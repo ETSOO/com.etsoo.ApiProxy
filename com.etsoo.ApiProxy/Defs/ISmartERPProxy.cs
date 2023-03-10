@@ -25,9 +25,10 @@ namespace com.etsoo.ApiProxy.Defs
         /// 获取地点细节
         /// </summary>
         /// <param name="replaceId">Place id</param>
+        /// <param name="language">Language</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Result</returns>
-        Task<PlaceCommon?> GetPlaceDetailsAsync(string replaceId, CancellationToken cancellationToken = default);
+        Task<PlaceCommon?> GetPlaceDetailsAsync(string replaceId, string? language = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Search place
