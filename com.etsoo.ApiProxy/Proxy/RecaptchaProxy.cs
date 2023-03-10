@@ -62,8 +62,9 @@ namespace com.etsoo.ApiProxy.Proxy
         /// 站点验证
         /// </summary>
         /// <param name="rq">Rquest data</param>
-        /// <returns></returns>
-        public async Task<SiteVerifyDto> SiteVerifyAsync(SiteVerifyRQ rq)
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns>Result</returns>
+        public async Task<SiteVerifyDto> SiteVerifyAsync(SiteVerifyRQ rq, CancellationToken cancellationToken = default)
         {
             var data = new Dictionary<string, string>
             {
@@ -76,12 +77,19 @@ namespace com.etsoo.ApiProxy.Proxy
                 data[nameof(rq.RemoteIp).ToLower()] = rq.RemoteIp;
             }
 
-            var response = await _httpClient.PostAsync("siteverify", new FormUrlEncodedContent(data));
+            var response = await _httpClient.PostAsync("siteverify", new FormUrlEncodedContent(data), cancellationToken);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                _logger.LogDebug("Status {status} for {@data}", response.StatusCode, data);
+            }
+
             response.EnsureSuccessStatusCode();
 
-            var result = await response.Content.ReadFromJsonAsync<SiteVerifyDto>();
+            var result = await response.Content.ReadFromJsonAsync<SiteVerifyDto>(cancellationToken: cancellationToken);
             if (result == null)
             {
+                _logger.LogDebug("No Data Returned for {@data}", data);
                 throw new ApplicationException("No Data Returned");
             }
 

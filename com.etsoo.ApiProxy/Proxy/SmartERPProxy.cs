@@ -1,4 +1,6 @@
-﻿using com.etsoo.ApiModel.Dto.SmartERP;
+﻿using com.etsoo.ApiModel.Dto.Maps;
+using com.etsoo.ApiModel.Dto.SmartERP;
+using com.etsoo.ApiModel.RQ.Maps;
 using com.etsoo.ApiModel.RQ.SmartERP;
 using com.etsoo.ApiProxy.Defs;
 using com.etsoo.ApiProxy.Options;
@@ -9,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Net.Http.Json;
+using System.Web;
 
 namespace com.etsoo.ApiProxy.Proxy
 {
@@ -68,22 +71,65 @@ namespace com.etsoo.ApiProxy.Proxy
         }
 
         /// <summary>
+        /// Place autocomplete
+        /// 地址自动填充
+        /// </summary>
+        /// <param name="rq">Request data</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns>Result</returns>
+        public async Task<IEnumerable<PlaceAutocomplete>?> AutocompleteAsync(PlaceQueryRQ rq, CancellationToken cancellationToken = default)
+        {
+            var response = await _httpClient.PostAsJsonAsync("Address/AutoComplete", rq, cancellationToken);
+            response.EnsureSuccessStatusCode();
+
+            return await response.Content.ReadFromJsonAsync<IEnumerable<PlaceAutocomplete>>(cancellationToken: cancellationToken);
+        }
+
+        /// <summary>
+        /// Get place details
+        /// 获取地点细节
+        /// </summary>
+        /// <param name="replaceId">Place id</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns>Result</returns>
+        public async Task<PlaceCommon?> GetPlaceDetailsAsync(string replaceId, CancellationToken cancellationToken = default)
+        {
+            return await _httpClient.GetFromJsonAsync<PlaceCommon>($"Address/GetPlaceDetails/{HttpUtility.UrlEncode(replaceId)}", SharedUtils.JsonDefaultSerializerOptions, cancellationToken);
+        }
+
+        /// <summary>
+        /// Search place
+        /// 查找地点
+        /// </summary>
+        /// <param name="rq">Request data</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns>Result</returns>
+        public async Task<IEnumerable<PlaceCommon>?> SearchPlaceAsync(PlaceQueryRQ rq, CancellationToken cancellationToken = default)
+        {
+            var response = await _httpClient.PostAsJsonAsync("Address/SearchPlace", rq, cancellationToken);
+            response.EnsureSuccessStatusCode();
+
+            return await response.Content.ReadFromJsonAsync<IEnumerable<PlaceCommon>>(cancellationToken: cancellationToken);
+        }
+
+        /// <summary>
         /// Get supported currencies
         /// 获取支持的币种
         /// </summary>
         /// <param name="language">Language</param>
+        /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Task</returns>
-        public async Task<IEnumerable<CurrencyDto>?> GetCurrenciesAsync(string? language = null)
+        public async Task<IEnumerable<CurrencyDto>?> GetCurrenciesAsync(string? language = null, CancellationToken cancellationToken = default)
         {
             return await CacheFactory.DoAsync(
                 _cache,
                 _cacheHours,
                 () => $"{identifier}.{nameof(GetCurrenciesAsync)}.{language}",
-                () => _httpClient.GetFromJsonAsync<IEnumerable<CurrencyDto>>($"Public/GetCurrencies?language={language}", SharedUtils.JsonDefaultSerializerOptions),
+                () => _httpClient.GetFromJsonAsync<IEnumerable<CurrencyDto>>($"Public/GetCurrencies?language={language}", SharedUtils.JsonDefaultSerializerOptions, cancellationToken),
                 new DistributedCacheEntryOptions
                 {
                     AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30)
-                });
+                }, cancellationToken);
         }
 
         /// <summary>
@@ -91,18 +137,19 @@ namespace com.etsoo.ApiProxy.Proxy
         /// 获取汇率
         /// </summary>
         /// <param name="currency">Currency, like USD, CNY</param>
+        /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Task</returns>
-        public async Task<ExchangeRateDto?> ExchangeRateAsync(string currency)
+        public async Task<ExchangeRateDto?> ExchangeRateAsync(string currency, CancellationToken cancellationToken = default)
         {
             return await CacheFactory.DoAsync(
                 _cache,
                 _cacheHours,
                 () => $"{identifier}.{nameof(ExchangeRateAsync)}.{currency}",
-                () => _httpClient.GetFromJsonAsync<ExchangeRateDto>($"Public/ExchangeRate/{currency}", SharedUtils.JsonDefaultSerializerOptions),
+                () => _httpClient.GetFromJsonAsync<ExchangeRateDto>($"Public/ExchangeRate/{currency}", SharedUtils.JsonDefaultSerializerOptions, cancellationToken),
                 new DistributedCacheEntryOptions
                 {
                     AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30)
-                });
+                }, cancellationToken);
         }
 
         /// <summary>
@@ -110,8 +157,9 @@ namespace com.etsoo.ApiProxy.Proxy
         /// 获取QRCode图片的Base64字符串
         /// </summary>
         /// <param name="rq">Request data</param>
+        /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Base64 string</returns>
-        public async Task<string> QRCodeAsync(QRCodeOptions rq)
+        public async Task<string> QRCodeAsync(QRCodeOptions rq, CancellationToken cancellationToken = default)
         {
             return await CacheFactory.DoStringAsync(
                 _cache,
@@ -119,11 +167,11 @@ namespace com.etsoo.ApiProxy.Proxy
                 () => $"{identifier}.{nameof(QRCodeAsync)}.{rq}",
                 async () =>
                 {
-                    var response = await _httpClient.PostAsJsonAsync("Public/QRCode", rq, SharedUtils.JsonDefaultSerializerOptions);
+                    var response = await _httpClient.PostAsJsonAsync("Public/QRCode", rq, SharedUtils.JsonDefaultSerializerOptions, cancellationToken);
                     response.EnsureSuccessStatusCode();
 
-                    return await response.Content.ReadAsStringAsync();
-                });
+                    return await response.Content.ReadAsStringAsync(cancellationToken: cancellationToken);
+                }, cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -131,15 +179,17 @@ namespace com.etsoo.ApiProxy.Proxy
         /// 地区列表
         /// </summary>
         /// <param name="language">Language</param>
+        /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Task</returns>
-        public async Task<IEnumerable<AddressRegionDto>?> RegionListAsync(string? language = null)
+        public async Task<IEnumerable<AddressRegionDto>?> RegionListAsync(string? language = null, CancellationToken cancellationToken = default)
         {
             var key = $"language={language}";
             return await CacheFactory.DoAsync(
                 _cache,
                 _cacheHours,
                 () => $"{identifier}.{nameof(RegionListAsync)}.{key}",
-                () => _httpClient.GetFromJsonAsync<IEnumerable<AddressRegionDto>>($"Address/RegionList?{key}", SharedUtils.JsonDefaultSerializerOptions));
+                () => _httpClient.GetFromJsonAsync<IEnumerable<AddressRegionDto>>($"Address/RegionList?{key}", SharedUtils.JsonDefaultSerializerOptions, cancellationToken),
+                cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -147,15 +197,17 @@ namespace com.etsoo.ApiProxy.Proxy
         /// 省州列表
         /// </summary>
         /// <param name="rq">Request data</param>
+        /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Task</returns>
-        public async Task<IEnumerable<AddressStateDto>?> StateListAsync(StateListRQ rq)
+        public async Task<IEnumerable<AddressStateDto>?> StateListAsync(StateListRQ rq, CancellationToken cancellationToken = default)
         {
             var key = $"{nameof(rq.RegionId)}={rq.RegionId}&{nameof(rq.Language)}={rq.Language}";
             return await CacheFactory.DoAsync(
                 _cache,
                 _cacheHours,
                 () => $"{identifier}.{nameof(StateListAsync)}.{key}",
-                () => _httpClient.GetFromJsonAsync<IEnumerable<AddressStateDto>>($"Address/StateList?{key}", SharedUtils.JsonDefaultSerializerOptions));
+                () => _httpClient.GetFromJsonAsync<IEnumerable<AddressStateDto>>($"Address/StateList?{key}", SharedUtils.JsonDefaultSerializerOptions, cancellationToken),
+                cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -163,15 +215,17 @@ namespace com.etsoo.ApiProxy.Proxy
         /// 城市列表
         /// </summary>
         /// <param name="rq">Request data</param>
+        /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Task</returns>
-        public async Task<IEnumerable<AddressCityDto>?> CityListAsync(CityListRQ rq)
+        public async Task<IEnumerable<AddressCityDto>?> CityListAsync(CityListRQ rq, CancellationToken cancellationToken = default)
         {
             var key = $"{nameof(rq.StateId)}={rq.StateId}&{nameof(rq.Language)}={rq.Language}";
             return await CacheFactory.DoAsync(
                 _cache,
                 _cacheHours,
                 () => $"{identifier}.{nameof(CityListAsync)}.{key}",
-                () => _httpClient.GetFromJsonAsync<IEnumerable<AddressCityDto>>($"Address/CityList?{key}", SharedUtils.JsonDefaultSerializerOptions));
+                () => _httpClient.GetFromJsonAsync<IEnumerable<AddressCityDto>>($"Address/CityList?{key}", SharedUtils.JsonDefaultSerializerOptions, cancellationToken),
+                cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -179,15 +233,17 @@ namespace com.etsoo.ApiProxy.Proxy
         /// 区县列表
         /// </summary>
         /// <param name="rq">Request data</param>
+        /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Task</returns>
-        public async Task<IEnumerable<AddressDistrictDto>?> DistrictListAsync(DistrictListRQ rq)
+        public async Task<IEnumerable<AddressDistrictDto>?> DistrictListAsync(DistrictListRQ rq, CancellationToken cancellationToken = default)
         {
             var key = $"{nameof(rq.CityId)}={rq.CityId}&{nameof(rq.Language)}={rq.Language}";
             return await CacheFactory.DoAsync(
                 _cache,
                 _cacheHours,
                 () => $"{identifier}.{nameof(DistrictListAsync)}.{key}",
-                () => _httpClient.GetFromJsonAsync<IEnumerable<AddressDistrictDto>>($"Address/DistrictList?{key}", SharedUtils.JsonDefaultSerializerOptions));
+                () => _httpClient.GetFromJsonAsync<IEnumerable<AddressDistrictDto>>($"Address/DistrictList?{key}", SharedUtils.JsonDefaultSerializerOptions, cancellationToken),
+                cancellationToken: cancellationToken);
         }
     }
 }

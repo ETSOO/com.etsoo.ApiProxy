@@ -73,13 +73,14 @@ namespace com.etsoo.ApiProxy.Proxy
         /// 异步自动填充
         /// </summary>
         /// <param name="rq">Request data</param>
+        /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Result</returns>
-        public async Task<AutocompleteResponse?> AutoCompleteAsync(AutocompleteRQ rq)
+        public async Task<AutocompleteResponse?> AutoCompleteAsync(AutocompleteRQ rq, CancellationToken cancellationToken = default)
         {
-            var response = await _httpClient.PostAsJsonAsync("Google/AutoComplete", rq);
+            var response = await _httpClient.PostAsJsonAsync("Google/AutoComplete", rq, cancellationToken);
             response.EnsureSuccessStatusCode();
 
-            return await response.Content.ReadFromJsonAsync<AutocompleteResponse>();
+            return await response.Content.ReadFromJsonAsync<AutocompleteResponse>(cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -87,13 +88,14 @@ namespace com.etsoo.ApiProxy.Proxy
         /// 异步查找地点
         /// </summary>
         /// <param name="rq">Request data</param>
+        /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Result</returns>
-        public async Task<FindPlaceResponse?> FindPlaceAsync(FindPlaceRQ rq)
+        public async Task<FindPlaceResponse?> FindPlaceAsync(FindPlaceRQ rq, CancellationToken cancellationToken = default)
         {
-            var response = await _httpClient.PostAsJsonAsync("Google/FindPlace", rq);
+            var response = await _httpClient.PostAsJsonAsync("Google/FindPlace", rq, cancellationToken);
             response.EnsureSuccessStatusCode();
 
-            return await response.Content.ReadFromJsonAsync<FindPlaceResponse>();
+            return await response.Content.ReadFromJsonAsync<FindPlaceResponse>(cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -101,13 +103,14 @@ namespace com.etsoo.ApiProxy.Proxy
         /// 异步查询地点
         /// </summary>
         /// <param name="rq">Request data</param>
+        /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Result</returns>
-        public async Task<SearchPlaceResponse?> SearchPlaceAsync(SearchPlaceRQ rq)
+        public async Task<SearchPlaceResponse?> SearchPlaceAsync(SearchPlaceRQ rq, CancellationToken cancellationToken = default)
         {
-            var response = await _httpClient.PostAsJsonAsync("Google/SearchPlace", rq);
+            var response = await _httpClient.PostAsJsonAsync("Google/SearchPlace", rq, cancellationToken);
             response.EnsureSuccessStatusCode();
 
-            return await response.Content.ReadFromJsonAsync<SearchPlaceResponse>();
+            return await response.Content.ReadFromJsonAsync<SearchPlaceResponse>(cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -115,13 +118,14 @@ namespace com.etsoo.ApiProxy.Proxy
         /// 异步查询通用地点
         /// </summary>
         /// <param name="rq">Request data</param>
+        /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Result</returns>
-        public async Task<IEnumerable<PlaceCommon>?> SearchCommonPlaceAsync(SearchPlaceRQ rq)
+        public async Task<IEnumerable<PlaceCommon>?> SearchCommonPlaceAsync(SearchPlaceRQ rq, CancellationToken cancellationToken = default)
         {
-            var response = await _httpClient.PostAsJsonAsync("Google/SearchCommonPlace", rq);
+            var response = await _httpClient.PostAsJsonAsync("Google/SearchCommonPlace", rq, cancellationToken);
             response.EnsureSuccessStatusCode();
 
-            return await response.Content.ReadFromJsonAsync<IEnumerable<PlaceCommon>>();
+            return await response.Content.ReadFromJsonAsync<IEnumerable<PlaceCommon>>(cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -129,8 +133,9 @@ namespace com.etsoo.ApiProxy.Proxy
         /// 异步获取地点细节
         /// </summary>
         /// <param name="rq">Request data</param>
+        /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Result</returns>
-        public async Task<GetDetailsResponse?> GetPlaceDetailsAsync(GetDetailsRQ rq)
+        public async Task<GetDetailsResponse?> GetPlaceDetailsAsync(GetDetailsRQ rq, CancellationToken cancellationToken = default)
         {
             return await CacheFactory.DoAsync(
                 _cache,
@@ -138,11 +143,11 @@ namespace com.etsoo.ApiProxy.Proxy
                 () => $"{identifier}.{nameof(GetPlaceDetailsAsync)}.{rq.CreateKey()}",
                 async () =>
                 {
-                    var response = await _httpClient.PostAsJsonAsync("Google/GetPlaceDetails", rq);
+                    var response = await _httpClient.PostAsJsonAsync("Google/GetPlaceDetails", rq, cancellationToken);
                     response.EnsureSuccessStatusCode();
 
-                    return await response.Content.ReadFromJsonAsync<GetDetailsResponse>();
-                });
+                    return await response.Content.ReadFromJsonAsync<GetDetailsResponse>(cancellationToken: cancellationToken);
+                }, cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -150,8 +155,9 @@ namespace com.etsoo.ApiProxy.Proxy
         /// 翻译短文本
         /// </summary>
         /// <param name="rq">Request data</param>
+        /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Translated text</returns>
-        public async Task<string> TranslateTextAsync(TranslateTextRQ rq)
+        public async Task<string> TranslateTextAsync(TranslateTextRQ rq, CancellationToken cancellationToken = default)
         {
             return await CacheFactory.DoStringAsync(
                 _cache,
@@ -159,11 +165,11 @@ namespace com.etsoo.ApiProxy.Proxy
                 () => $"{identifier}.{nameof(TranslateTextAsync)}.{rq.Text}.{rq.TargetLanguageCode}",
                 async () =>
                 {
-                    var response = await _httpClient.PostAsJsonAsync("Google/TranslateText", rq);
+                    var response = await _httpClient.PostAsJsonAsync("Google/TranslateText", rq, cancellationToken);
                     response.EnsureSuccessStatusCode();
 
-                    return await response.Content.ReadAsStringAsync();
-                });
+                    return await response.Content.ReadAsStringAsync(cancellationToken: cancellationToken);
+                }, cancellationToken: cancellationToken);
         }
     }
 }

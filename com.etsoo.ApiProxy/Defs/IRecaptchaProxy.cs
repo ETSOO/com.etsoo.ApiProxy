@@ -14,7 +14,8 @@ namespace com.etsoo.ApiProxy.Defs
         /// 站点验证
         /// </summary>
         /// <param name="rq">Rquest data</param>
-        /// <returns></returns>
-        Task<SiteVerifyDto> SiteVerifyAsync(SiteVerifyRQ rq);
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns>Result</returns>
+        Task<SiteVerifyDto> SiteVerifyAsync(SiteVerifyRQ rq, CancellationToken cancellationToken = default);
     }
 }

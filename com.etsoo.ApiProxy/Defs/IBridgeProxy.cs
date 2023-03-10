@@ -17,7 +17,7 @@ namespace com.etsoo.ApiProxy.Defs
         /// </summary>
         /// <param name="rq">Request data</param>
         /// <returns>Result</returns>
-        Task<AutocompleteResponse?> AutoCompleteAsync(AutocompleteRQ rq);
+        Task<AutocompleteResponse?> AutoCompleteAsync(AutocompleteRQ rq, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Async find place
@@ -25,7 +25,7 @@ namespace com.etsoo.ApiProxy.Defs
         /// </summary>
         /// <param name="rq">Request data</param>
         /// <returns>Result</returns>
-        Task<FindPlaceResponse?> FindPlaceAsync(FindPlaceRQ rq);
+        Task<FindPlaceResponse?> FindPlaceAsync(FindPlaceRQ rq, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Async search place
@@ -33,7 +33,7 @@ namespace com.etsoo.ApiProxy.Defs
         /// </summary>
         /// <param name="rq">Request data</param>
         /// <returns>Result</returns>
-        Task<SearchPlaceResponse?> SearchPlaceAsync(SearchPlaceRQ rq);
+        Task<SearchPlaceResponse?> SearchPlaceAsync(SearchPlaceRQ rq, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Async search common place
@@ -41,7 +41,7 @@ namespace com.etsoo.ApiProxy.Defs
         /// </summary>
         /// <param name="rq">Request data</param>
         /// <returns>Result</returns>
-        Task<IEnumerable<PlaceCommon>?> SearchCommonPlaceAsync(SearchPlaceRQ rq);
+        Task<IEnumerable<PlaceCommon>?> SearchCommonPlaceAsync(SearchPlaceRQ rq, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Async get place details
@@ -49,7 +49,7 @@ namespace com.etsoo.ApiProxy.Defs
         /// </summary>
         /// <param name="rq">Request data</param>
         /// <returns>Result</returns>
-        Task<GetDetailsResponse?> GetPlaceDetailsAsync(GetDetailsRQ rq);
+        Task<GetDetailsResponse?> GetPlaceDetailsAsync(GetDetailsRQ rq, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Translate short text
@@ -57,6 +57,6 @@ namespace com.etsoo.ApiProxy.Defs
         /// </summary>
         /// <param name="rq">Request data</param>
         /// <returns>Translated text</returns>
-        Task<string> TranslateTextAsync(TranslateTextRQ rq);
+        Task<string> TranslateTextAsync(TranslateTextRQ rq, CancellationToken cancellationToken = default);
     }
 }

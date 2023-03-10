@@ -64,13 +64,25 @@ namespace com.etsoo.ApiProxy.Proxy
         /// <returns>Result</returns>
         public async Task<IActionResult> OnDemandRevalidateAsync(params string[] urls)
         {
+            return await OnDemandRevalidateAsync(urls, default);
+        }
+
+        /// <summary>
+        /// Async on demand revalidataion
+        /// 异步按需重新验证
+        /// </summary>
+        /// <param name="urls">Urls to revalidate</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns>Result</returns>
+        public async Task<IActionResult> OnDemandRevalidateAsync(IEnumerable<string> urls, CancellationToken cancellationToken)
+        {
             try
             {
                 var p = string.Join('&', urls.Select(url => $"url={HttpUtility.UrlEncode(url)}"));
-                var response = await _httpClient.GetAsync($"api/revalidate?{p}");
+                var response = await _httpClient.GetAsync($"api/revalidate?{p}", cancellationToken);
                 if (response.IsSuccessStatusCode)
                 {
-                    return await response.Content.ReadFromJsonAsync<ActionResult>() ?? new ActionResult { Title = "No Content" };
+                    return await response.Content.ReadFromJsonAsync<ActionResult>(cancellationToken: cancellationToken) ?? new ActionResult { Title = "No Content" };
                 }
                 else
                 {
