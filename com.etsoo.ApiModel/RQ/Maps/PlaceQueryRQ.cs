@@ -21,6 +21,12 @@ namespace com.etsoo.ApiModel.RQ.Maps
         public ApiOutput Output { get; init; } = ApiOutput.JSON;
 
         /// <summary>
+        /// API provider
+        /// 接口供应商
+        /// </summary>
+        public ApiProvider? Provider { get; init; }
+
+        /// <summary>
         /// Language, like zh-CN
         /// 语言
         /// </summary>

@@ -4,7 +4,7 @@
     /// Location
     /// 位置
     /// </summary>
-    /// <param name="Lat">Latitude, 维度</param>
+    /// <param name="Lat">Latitude, 纬度</param>
     /// <param name="Lng">Longitude, 经度</param>
     public record Location(double Lat, double Lng)
     {
