@@ -50,14 +50,14 @@ namespace com.etsoo.ApiProxyTests
         [TestMethod]
         public async Task SearchPlaceAsyncTest()
         {
-            var result = await proxy.SearchPlaceAsync(new SearchPlaceRQ { Query = "12a Cranbrook" });
+            var result = await proxy.SearchPlaceAsync(new SearchPlaceRQ { Query = "12a Cranbrook", Region = "NZ" });
             Assert.IsTrue(result?.Results.Any());
         }
 
         [TestMethod]
         public async Task SearchCommonPlaceAsyncTest()
         {
-            var result = await proxy.SearchCommonPlaceAsync(new SearchPlaceRQ { Query = "12a Cranbrook" });
+            var result = await proxy.SearchCommonPlaceAsync(new SearchPlaceRQ { Query = "12a Cranbrook", Region = "NZ" });
             var first = result?.FirstOrDefault();
             Assert.IsNotNull(first);
             Assert.AreEqual("NZ", first.Region);

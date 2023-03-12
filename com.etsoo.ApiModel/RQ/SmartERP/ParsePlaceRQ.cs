@@ -12,28 +12,28 @@ namespace com.etsoo.ApiModel.RQ.SmartERP
         /// Region or country name, like China
         /// 地区或国家名称，如中国
         /// </summary>
-        [StringLength(50)]
+        [StringLength(50, MinimumLength = 2)]
         public string? Region { get; init; }
 
         /// <summary>
         /// State or province
         /// 州 / 省
         /// </summary>
-        [StringLength(50)]
+        [StringLength(50, MinimumLength = 2)]
         public string? State { get; init; }
 
         /// <summary>
         /// City
         /// 城市
         /// </summary>
-        [StringLength(128)]
+        [StringLength(128, MinimumLength = 2)]
         public string? City { get; init; }
 
         /// <summary>
         /// 区县
         /// District
         /// </summary>
-        [StringLength(128)]
+        [StringLength(128, MinimumLength = 2)]
         public string? District { get; init; }
     }
 }
