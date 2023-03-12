@@ -99,6 +99,32 @@ namespace com.etsoo.ApiProxy.Proxy
         }
 
         /// <summary>
+        /// Parse place
+        /// 解析地点
+        /// </summary>
+        /// <param name="rq">Request data</param>
+        /// <returns>Result</returns>
+        public async Task<ParsedPlaceDto?> ParsePlaceAsync(ParsePlaceRQ rq, CancellationToken cancellationToken = default)
+        {
+            return await CacheFactory.DoAsync(
+                _cache,
+                _cacheHours,
+                () => $"{identifier}.{nameof(ParsePlaceAsync)}.{rq}",
+                async () =>
+                {
+                    var response = await _httpClient.PostAsJsonAsync("Address/ParsePlace", rq, cancellationToken);
+                    response.EnsureSuccessStatusCode();
+
+                    return await response.Content.ReadFromJsonAsync<ParsedPlaceDto>(cancellationToken: cancellationToken);
+                },
+                new DistributedCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromDays(7)
+                }, cancellationToken
+            );
+        }
+
+        /// <summary>
         /// Search place
         /// 查找地点
         /// </summary>

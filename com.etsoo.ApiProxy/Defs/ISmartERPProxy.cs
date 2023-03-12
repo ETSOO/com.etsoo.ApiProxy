@@ -31,6 +31,14 @@ namespace com.etsoo.ApiProxy.Defs
         Task<PlaceCommon?> GetPlaceDetailsAsync(string replaceId, string? language = null, CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// Parse place
+        /// 解析地点
+        /// </summary>
+        /// <param name="rq">Request data</param>
+        /// <returns>Result</returns>
+        Task<ParsedPlaceDto?> ParsePlaceAsync(ParsePlaceRQ rq, CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// Search place
         /// 查找地点
         /// </summary>

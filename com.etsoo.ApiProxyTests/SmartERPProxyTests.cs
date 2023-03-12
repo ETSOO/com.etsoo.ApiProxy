@@ -82,5 +82,14 @@ namespace com.etsoo.ApiProxyTests
             var districts = await proxy.DistrictListAsync(new DistrictListRQ { CityId = cs.Id, Language = "zh-CN" });
             Assert.IsTrue(districts?.Any(d => d.Label.StartsWith("宁乡")));
         }
+
+        [TestMethod]
+        public async Task ParsePlaceAsyncTests()
+        {
+            var result = await proxy.ParsePlaceAsync(new ParsePlaceRQ { City = "青岛", District = "崂山" });
+            Assert.IsNotNull(result);
+
+            Assert.AreEqual("崂山区", result.District);
+        }
     }
 }
