@@ -48,6 +48,15 @@ namespace com.etsoo.ApiProxy.Defs
         Task<IEnumerable<PlaceCommon>?> SearchPlaceAsync(PlaceQueryRQ rq, CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// Parse PIN
+        /// 解析身份证号码
+        /// </summary>
+        /// <param name="rq">Request data</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns></returns>
+        ValueTask<PinDto?> ParsePinAsync(ParsePinRQ rq, CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// Get exchange rate
         /// 获取汇率
         /// </summary>

@@ -91,5 +91,18 @@ namespace com.etsoo.ApiProxyTests
 
             Assert.AreEqual("崂山区", result.District);
         }
+
+        [TestMethod]
+        public async Task ParsePinAsyncTests()
+        {
+            var result = await proxy.ParsePinAsync(new ParsePinRQ { Language = "zh-CN", Pin = "430124199110276963" });
+            Assert.IsNotNull(result);
+
+            Assert.AreEqual(10, result.Birthday?.Month);
+            Assert.AreEqual("F", result.Gender);
+            Assert.AreEqual("宁乡市", result.District);
+            Assert.AreEqual("宁乡县", result.MergedDistrict);
+            Assert.IsFalse(result.Valid);
+        }
     }
 }

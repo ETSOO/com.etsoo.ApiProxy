@@ -140,6 +140,21 @@ namespace com.etsoo.ApiProxy.Proxy
         }
 
         /// <summary>
+        /// Parse PIN
+        /// 解析身份证号码
+        /// </summary>
+        /// <param name="rq">Request data</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns></returns>
+        public async ValueTask<PinDto?> ParsePinAsync(ParsePinRQ rq, CancellationToken cancellationToken = default)
+        {
+            var response = await _httpClient.PostAsJsonAsync("Public/ParsePin", rq, cancellationToken);
+            response.EnsureSuccessStatusCode();
+
+            return await response.Content.ReadFromJsonAsync<PinDto>(cancellationToken: cancellationToken);
+        }
+
+        /// <summary>
         /// Get supported currencies
         /// 获取支持的币种
         /// </summary>

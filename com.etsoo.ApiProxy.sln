@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33103.184
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "com.etsoo.ApiProxy", "com.etsoo.ApiProxy\com.etsoo.ApiProxy.csproj", "{7C2891B5-E0EE-488E-8D69-DC8F77AF86C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "com.etsoo.ApiProxy", "com.etsoo.ApiProxy\com.etsoo.ApiProxy.csproj", "{7C2891B5-E0EE-488E-8D69-DC8F77AF86C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "com.etsoo.ApiProxyTests", "com.etsoo.ApiProxyTests\com.etsoo.ApiProxyTests.csproj", "{5D2C4E62-2774-47E5-9313-3E5F78606ACA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "com.etsoo.ApiProxyTests", "com.etsoo.ApiProxyTests\com.etsoo.ApiProxyTests.csproj", "{5D2C4E62-2774-47E5-9313-3E5F78606ACA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "com.etsoo.ApiModel", "com.etsoo.ApiModel\com.etsoo.ApiModel.csproj", "{86C990CF-391F-4750-B4CC-9ADCFE863D52}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "com.etsoo.ApiModel", "com.etsoo.ApiModel\com.etsoo.ApiModel.csproj", "{86C990CF-391F-4750-B4CC-9ADCFE863D52}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -43,7 +43,7 @@ namespace com.etsoo.ApiProxyTests
         [TestMethod]
         public async Task FindPlaceAsyncTest()
         {
-            var result = await proxy.FindPlaceAsync(new FindPlaceRQ { Input = "12a Cranbrook" });
+            var result = await proxy.FindPlaceAsync(new FindPlaceRQ { Input = "青岛市海尔路63号数码科技中心南楼1008室" });
             Assert.IsTrue(result?.Candidates.Any());
         }
 
