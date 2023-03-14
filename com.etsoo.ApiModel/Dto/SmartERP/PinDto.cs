@@ -23,5 +23,22 @@
         /// 是否形式合法
         /// </summary>
         public required bool Valid { get; init; }
+
+        /// <summary>
+        /// Constructor
+        /// 构造函数
+        /// </summary>
+        public PinDto() : base()
+        {
+        }
+
+        /// <summary>
+        /// Constructor
+        /// 构造函数
+        /// </summary>
+        /// <param name="parent">Parent</param>
+        public PinDto(GetAddressNumDto parent) : base(parent)
+        {
+        }
     }
 }
