@@ -10,7 +10,7 @@
         /// Birthday
         /// 出生日期
         /// </summary>
-        public DateTime? Birthday { get; init; }
+        public DateTimeOffset Birthday { get; init; }
 
         /// <summary>
         /// Gender
