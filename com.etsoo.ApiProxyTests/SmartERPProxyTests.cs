@@ -99,6 +99,7 @@ namespace com.etsoo.ApiProxyTests
             Assert.IsNotNull(result);
 
             Assert.AreEqual(10, result.Birthday?.Month);
+            Assert.AreEqual(27, result.Birthday?.Day);
             Assert.AreEqual("F", result.Gender);
             Assert.AreEqual("宁乡市", result.District);
             Assert.AreEqual("宁乡县", result.MergedDistrict);
