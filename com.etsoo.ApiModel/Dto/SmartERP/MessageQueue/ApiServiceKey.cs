@@ -7,6 +7,12 @@
     public record ApiServiceKey
     {
         /// <summary>
+        /// Service
+        /// 服务
+        /// </summary>
+        public string? Service { get; init; }
+
+        /// <summary>
         /// Organization
         /// 所属机构
         /// </summary>
