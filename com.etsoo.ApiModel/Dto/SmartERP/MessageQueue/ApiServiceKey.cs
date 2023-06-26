@@ -7,6 +7,12 @@
     public record ApiServiceKey
     {
         /// <summary>
+        /// Api id
+        /// 接口编号
+        /// </summary>
+        public int ApiId { get; init; }
+
+        /// <summary>
         /// Service
         /// 服务
         /// </summary>
