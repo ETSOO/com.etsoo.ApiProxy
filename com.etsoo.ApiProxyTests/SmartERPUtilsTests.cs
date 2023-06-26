@@ -9,8 +9,8 @@ namespace com.etsoo.ApiProxyTests
         [TestMethod]
         public void ApiServiceToTypeTests()
         {
-            var type = SmartERPUtils.ApiServiceToType(ApiService.SMTPDelegation);
-            Assert.AreEqual(SmartERPUtils.SmartERPApiPrefix + nameof(ApiService.SMTPDelegation), type);
+            var type = SmartERPUtils.ApiServiceToType(ApiServiceEnum.SMTPDelegation);
+            Assert.AreEqual(SmartERPUtils.SmartERPApiPrefix + nameof(ApiServiceEnum.SMTPDelegation), type);
         }
 
         [TestMethod]

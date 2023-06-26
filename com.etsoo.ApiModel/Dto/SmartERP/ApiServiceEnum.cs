@@ -4,7 +4,7 @@
     /// API service enum
     /// 接口服务枚举
     /// </summary>
-    public enum ApiService : int
+    public enum ApiServiceEnum : int
     {
         /// <summary>
         /// SMTP

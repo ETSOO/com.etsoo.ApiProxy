@@ -19,7 +19,7 @@ namespace com.etsoo.ApiModel.Utils
         /// </summary>
         /// <param name="api">API</param>
         /// <returns>Message type</returns>
-        public static string ApiServiceToType(ApiService api)
+        public static string ApiServiceToType(ApiServiceEnum api)
         {
             return $"{SmartERPApiPrefix}{api}";
         }
@@ -30,11 +30,11 @@ namespace com.etsoo.ApiModel.Utils
         /// <param name="type">Type</param>
         /// <param name="api">API</param>
         /// <returns>Result</returns>
-        public static bool TypeToApiService(string type, [NotNullWhen(true)] out ApiService? api)
+        public static bool TypeToApiService(string type, [NotNullWhen(true)] out ApiServiceEnum? api)
         {
             api = null;
 
-            if (type.StartsWith(SmartERPApiPrefix) && Enum.TryParse<ApiService>(type[SmartERPApiPrefix.Length..], out var result))
+            if (type.StartsWith(SmartERPApiPrefix) && Enum.TryParse<ApiServiceEnum>(type[SmartERPApiPrefix.Length..], out var result))
             {
                 api = result;
                 return true;
