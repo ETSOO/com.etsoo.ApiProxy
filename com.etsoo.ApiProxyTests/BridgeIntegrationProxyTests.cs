@@ -43,7 +43,7 @@ namespace com.etsoo.ApiProxyTests
         [TestMethod]
         public async Task FindPlaceAsyncTest()
         {
-            var result = await proxy.FindPlaceAsync(new FindPlaceRQ { Input = "青岛市海尔路63号数码科技中心南楼1008室" });
+            var result = await proxy.FindPlaceAsync(new FindPlaceRQ { Input = "青岛市海尔路63号数码科技中心" });
             Assert.IsTrue(result?.Candidates.Any());
         }
 
@@ -57,7 +57,7 @@ namespace com.etsoo.ApiProxyTests
         [TestMethod]
         public async Task SearchCommonPlaceAsyncTest()
         {
-            var result = await proxy.SearchCommonPlaceAsync(new SearchPlaceRQ { Query = "12a Cranbrook", Region = "NZ" });
+            var result = await proxy.SearchCommonPlaceAsync(new SearchPlaceRQ { Query = "12a Cranbrook Place", Region = "NZ" });
             var first = result?.FirstOrDefault();
             Assert.IsNotNull(first);
             Assert.AreEqual("NZ", first.Region);
