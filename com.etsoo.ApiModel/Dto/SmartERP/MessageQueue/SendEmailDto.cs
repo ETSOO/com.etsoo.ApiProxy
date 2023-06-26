@@ -7,12 +7,6 @@
     public record SendEmailDto
     {
         /// <summary>
-        /// Message Type
-        /// 消息类型
-        /// </summary>
-        public const string MessageType = "SMARTERP-SENDEMAIL";
-
-        /// <summary>
         /// Subject
         /// 主题
         /// </summary>

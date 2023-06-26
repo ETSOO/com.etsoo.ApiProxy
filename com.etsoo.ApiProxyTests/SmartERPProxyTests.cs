@@ -98,8 +98,10 @@ namespace com.etsoo.ApiProxyTests
             var result = await proxy.ParsePinAsync(new ParsePinRQ { Language = "zh-CN", Pin = "430124199110276963" });
             Assert.IsNotNull(result);
 
-            Assert.AreEqual(10, result.Birthday?.Month);
-            Assert.AreEqual(27, result.Birthday?.Day);
+            Assert.IsNotNull(result.Birthday);
+            Assert.AreEqual(10, result.Birthday.Value.Month);
+            Assert.AreEqual(27, result.Birthday.Value.Day);
+
             Assert.AreEqual("F", result.Gender);
             Assert.AreEqual("宁乡市", result.District);
             Assert.AreEqual("宁乡县", result.MergedDistrict);
