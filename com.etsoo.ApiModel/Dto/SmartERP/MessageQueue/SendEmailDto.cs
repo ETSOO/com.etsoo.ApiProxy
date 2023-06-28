@@ -19,10 +19,22 @@
         public required string Body { get; init; }
 
         /// <summary>
-        /// Recipients
+        /// User Recipients
+        /// 用户收件人
+        /// </summary>
+        public IEnumerable<int>? Users { get; init; }
+
+        /// <summary>
+        /// User reply to
+        /// 回复用户
+        /// </summary>
+        public int? ReplyTo { get; init; }
+
+        /// <summary>
+        /// To recipients
         /// 收件人
         /// </summary>
-        public required IEnumerable<int> Users { get; init; }
+        public IEnumerable<string>? To { get; init; }
 
         /// <summary>
         /// Delivery time
