@@ -25,10 +25,10 @@
         public IEnumerable<int>? Users { get; init; }
 
         /// <summary>
-        /// User reply to
-        /// 回复用户
+        /// User reply to address, may email address or GUID or INT user id
+        /// 回复用户，可以是邮箱地址，用户全局编号(GUID or INT)
         /// </summary>
-        public int? ReplyTo { get; init; }
+        public string? ReplyTo { get; init; }
 
         /// <summary>
         /// To recipients
