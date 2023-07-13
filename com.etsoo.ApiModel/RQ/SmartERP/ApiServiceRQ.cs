@@ -15,12 +15,6 @@ namespace com.etsoo.ApiModel.RQ.SmartERP
         public ApiServiceEnum Api { get; init; }
 
         /// <summary>
-        /// Service, like S4
-        /// 服务，如 S4
-        /// </summary>
-        public required string Service { get; init; }
-
-        /// <summary>
         /// Global organization id
         /// 全局机构编号
         /// </summary>
