@@ -25,6 +25,13 @@ namespace com.etsoo.ApiProxyTests
         }
 
         [TestMethod]
+        public async Task AuthorizeApiServiceAsyncTests()
+        {
+            var result = await proxy.AuthorizeApiServiceAsync(4, "api".PadLeft(64, 'A'));
+            Assert.IsTrue(string.IsNullOrEmpty(result));
+        }
+
+        [TestMethod]
         public async Task GetCurrenciesAsyncTests()
         {
             var currencies = await proxy.GetCurrenciesAsync("en");

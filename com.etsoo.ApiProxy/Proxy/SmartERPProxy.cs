@@ -71,6 +71,21 @@ namespace com.etsoo.ApiProxy.Proxy
         }
 
         /// <summary>
+        /// Async authorize API service
+        /// 异步授权接口服务
+        /// </summary>
+        /// <param name="serviceId">Service id</param>
+        /// <param name="rq">Request data</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns>Result</returns>
+        public async Task<string?> AuthorizeApiServiceAsync(int serviceId, string rq, CancellationToken cancellationToken = default)
+        {
+            var response = await _httpClient.PostAsJsonAsync($"Public/AuthorizeApiService/{serviceId}", rq, cancellationToken);
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadAsStringAsync(cancellationToken);
+        }
+
+        /// <summary>
         /// Place autocomplete
         /// 地址自动填充
         /// </summary>

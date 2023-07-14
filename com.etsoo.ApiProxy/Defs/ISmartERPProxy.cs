@@ -12,6 +12,16 @@ namespace com.etsoo.ApiProxy.Defs
     public interface ISmartERPProxy : IProxy
     {
         /// <summary>
+        /// Async authorize API service
+        /// 异步授权接口服务
+        /// </summary>
+        /// <param name="serviceId">Service id</param>
+        /// <param name="rq">Request data</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns>Result</returns>
+        Task<string?> AuthorizeApiServiceAsync(int serviceId, string rq, CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// Place autocomplete
         /// 地址自动填充
         /// </summary>
