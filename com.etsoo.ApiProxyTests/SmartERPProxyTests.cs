@@ -49,6 +49,13 @@ namespace com.etsoo.ApiProxyTests
         }
 
         [TestMethod]
+        public void GetOrgAvatarTests()
+        {
+            var url = proxy.GetOrgAvatar(1);
+            Assert.AreEqual("http://localhost/com.etsoo.SmartERPApi/api/Storage/OrgAvatar/1", url, true);
+        }
+
+        [TestMethod]
         public async Task ExchangeRateAsyncTests()
         {
             var rate = await proxy.ExchangeRateAsync("USD");

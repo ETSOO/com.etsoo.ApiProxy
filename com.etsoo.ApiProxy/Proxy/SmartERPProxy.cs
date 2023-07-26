@@ -27,6 +27,7 @@ namespace com.etsoo.ApiProxy.Proxy
         private readonly HttpClient _httpClient;
         private readonly IDistributedCache _cache;
         private readonly double _cacheHours;
+        private readonly string _apiBase;
 
         /// <summary>
         /// Constructor
@@ -38,7 +39,7 @@ namespace com.etsoo.ApiProxy.Proxy
         /// <param name="cache">Cache</param>
         public SmartERPProxy(HttpClient httpClient, ILogger logger, SmartERPOptions options, IDistributedCache cache)
         {
-            Setup(httpClient, options);
+            _apiBase = Setup(httpClient, options);
 
             _httpClient = httpClient;
             _logger = logger;
@@ -60,7 +61,7 @@ namespace com.etsoo.ApiProxy.Proxy
         {
         }
 
-        private void Setup(HttpClient client, SmartERPOptions options)
+        private string Setup(HttpClient client, SmartERPOptions options)
         {
             var domain = options.BaseAddress;
 
@@ -68,6 +69,8 @@ namespace com.etsoo.ApiProxy.Proxy
             if (domain.Length < 6) domain = $"https://{domain}api.etsoo.com/api/";
 
             client.BaseAddress = new Uri(domain);
+
+            return domain;
         }
 
         /// <summary>
@@ -98,6 +101,17 @@ namespace com.etsoo.ApiProxy.Proxy
             response.EnsureSuccessStatusCode();
 
             return await response.Content.ReadFromJsonAsync<IEnumerable<PlaceAutocomplete>>(cancellationToken: cancellationToken);
+        }
+
+        /// <summary>
+        /// Get organization avatar URL
+        /// 获取机构图像网址
+        /// </summary>
+        /// <param name="id">Organization id</param>
+        /// <returns>Result</returns>
+        public string GetOrgAvatar(int id)
+        {
+            return $"{_apiBase}Storage/OrgAvatar/{id}";
         }
 
         /// <summary>

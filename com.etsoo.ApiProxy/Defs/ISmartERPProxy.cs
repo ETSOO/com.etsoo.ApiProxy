@@ -31,6 +31,14 @@ namespace com.etsoo.ApiProxy.Defs
         Task<IEnumerable<PlaceAutocomplete>?> AutocompleteAsync(PlaceQueryRQ rq, CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// Get organization avatar URL
+        /// 获取机构图像网址
+        /// </summary>
+        /// <param name="id">Organization id</param>
+        /// <returns>Result</returns>
+        string GetOrgAvatar(int id);
+
+        /// <summary>
         /// Get place details
         /// 获取地点细节
         /// </summary>
