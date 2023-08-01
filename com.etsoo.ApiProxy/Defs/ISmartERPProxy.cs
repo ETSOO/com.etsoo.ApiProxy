@@ -22,6 +22,15 @@ namespace com.etsoo.ApiProxy.Defs
         Task<string?> AuthorizeApiServiceAsync(int serviceId, string rq, CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// Async authorize API services
+        /// 异步授权接口服务
+        /// </summary>
+        /// <param name="rq">Request data</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns>Result</returns>
+        Task<IEnumerable<string?>?> AuthorizeApiServicesAsync(AuthorizeApiServicesRQ rq, CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// Place autocomplete
         /// 地址自动填充
         /// </summary>
