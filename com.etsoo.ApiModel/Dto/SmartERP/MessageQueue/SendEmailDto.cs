@@ -47,5 +47,11 @@
         /// 优先级
         /// </summary>
         public MessagePriority? Priority { get; init; }
+
+        /// <summary>
+        /// Importance
+        /// 重要性
+        /// </summary>
+        public MessageImportance? Importance { get; init; }
     }
 }

@@ -1,13 +1,13 @@
 ﻿namespace com.etsoo.ApiModel.Dto.SmartERP.MessageQueue
 {
     /// <summary>
-    /// Message priority
-    /// 消息优先级
+    /// Message importance
+    /// 消息重要性
     /// </summary>
-    public enum MessagePriority
+    public enum MessageImportance
     {
-        NonUrgent,
+        Low,
         Normal,
-        Urgent
+        High
     }
 }
