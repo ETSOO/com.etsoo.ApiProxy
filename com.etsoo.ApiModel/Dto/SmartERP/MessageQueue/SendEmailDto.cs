@@ -41,5 +41,11 @@
         /// 发送时间
         /// </summary>
         public DateTime? DeliveryTime { get; init; }
+
+        /// <summary>
+        /// Priority
+        /// 优先级
+        /// </summary>
+        public MessagePriority? Priority { get; init; }
     }
 }
