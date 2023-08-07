@@ -15,6 +15,11 @@ namespace com.etsoo.ApiModel.Utils
         public const string SmartERPApiPrefix = "SMARTERP-API-";
 
         /// <summary>
+        /// SmartERP system operation message type
+        /// </summary>
+        public const string SmartERPOperationMessageType = "SMARTERP-SYSTEM-OPERATION";
+
+        /// <summary>
         /// API service to message type
         /// </summary>
         /// <param name="api">API</param>
