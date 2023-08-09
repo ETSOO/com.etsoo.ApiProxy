@@ -7,6 +7,12 @@
     public record OperationMessageDto
     {
         /// <summary>
+        /// App id
+        /// 程序编号
+        /// </summary>
+        public required string AppId { get; init; }
+
+        /// <summary>
         /// Organization id
         /// 机构编号
         /// </summary>
