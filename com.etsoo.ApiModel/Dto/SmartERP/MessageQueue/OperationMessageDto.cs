@@ -31,6 +31,12 @@
         public long? Id { get; init; }
 
         /// <summary>
+        /// Related fields to pass more data
+        /// 相关字段，便于传递更多数据
+        /// </summary>
+        public IEnumerable<object>? Fields { get; set; }
+
+        /// <summary>
         /// Operation type
         /// 操作类型
         /// </summary>
