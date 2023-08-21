@@ -19,14 +19,14 @@
         public string? Service { get; init; }
 
         /// <summary>
-        /// Organization
-        /// 所属机构
+        /// Organization id
+        /// 所属机构编号
         /// </summary>
-        public required string Organization { get; init; }
+        public required int Organization { get; init; }
 
         /// <summary>
-        /// Current user
-        /// 当前用户
+        /// Current user id
+        /// 当前用户编号
         /// </summary>
         public required string User { get; init; }
 
