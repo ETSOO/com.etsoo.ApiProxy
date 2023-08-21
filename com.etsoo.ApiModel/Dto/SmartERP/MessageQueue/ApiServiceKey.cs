@@ -28,7 +28,7 @@
         /// Current user id
         /// 当前用户编号
         /// </summary>
-        public required string User { get; init; }
+        public required int User { get; init; }
 
         /// <summary>
         /// Time ticks
