@@ -330,5 +330,21 @@ namespace com.etsoo.ApiProxy.Proxy
                 () => _httpClient.GetFromJsonAsync<IEnumerable<AddressDistrictDto>>($"Address/DistrictList?{key}", SharedUtils.JsonDefaultSerializerOptions, cancellationToken),
                 cancellationToken: cancellationToken);
         }
+
+        /// <summary>
+        /// Get supported cultures
+        /// 获取所有支持的文化
+        /// </summary>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns>Result</returns>
+        public async Task<IEnumerable<ListItem1>?> SupportedCulturesAsync(CancellationToken cancellationToken = default)
+        {
+            return await CacheFactory.DoAsync(
+                _cache,
+                _cacheHours,
+                () => $"{identifier}.{nameof(SupportedCulturesAsync)}",
+                () => _httpClient.GetFromJsonAsync<IEnumerable<ListItem1>>("Public/SupportedCultures", SharedUtils.JsonDefaultSerializerOptions, cancellationToken),
+                cancellationToken: cancellationToken);
+        }
     }
 }

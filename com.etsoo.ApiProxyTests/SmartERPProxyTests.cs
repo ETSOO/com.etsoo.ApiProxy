@@ -128,5 +128,14 @@ namespace com.etsoo.ApiProxyTests
             Assert.AreEqual("宁乡县", result.MergedDistrict);
             Assert.IsFalse(result.Valid);
         }
+
+        [TestMethod]
+        public async Task SupportedCulturesAsyncTests()
+        {
+            var cultures = await proxy.SupportedCulturesAsync();
+            Assert.IsNotNull(cultures);
+
+            Assert.IsTrue(cultures.Any(culture => culture.Id.Equals("zh-Hans")));
+        }
     }
 }

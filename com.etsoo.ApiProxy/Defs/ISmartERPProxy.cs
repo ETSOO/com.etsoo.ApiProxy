@@ -145,5 +145,13 @@ namespace com.etsoo.ApiProxy.Defs
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Task</returns>
         Task<IEnumerable<AddressDistrictDto>?> DistrictListAsync(DistrictListRQ rq, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Get supported cultures
+        /// 获取所有支持的文化
+        /// </summary>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns>Result</returns>
+        Task<IEnumerable<ListItem1>?> SupportedCulturesAsync(CancellationToken cancellationToken = default);
     }
 }
