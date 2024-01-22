@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <SignAssembly>true</SignAssembly>
@@ -10,12 +10,12 @@
     <RepositoryUrl>https://github.com/ETSOO/com.etsoo.ApiProxy</RepositoryUrl>
     <Authors>ETSOO SmartERP NextGen Team</Authors>
     <Company>ETSOO / 亿速思维</Company>
-    <Copyright>Copyright © ETSOO 2004 - 2023</Copyright>
+    <Copyright>Copyright © ETSOO 2004 - 2024</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Description>ETSOO Api Proxy
 亿速思维接口代理</Description>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
-    <Version>1.0.47</Version>
+    <Version>1.0.49</Version>
     <AssemblyVersion>1.0.1.0</AssemblyVersion>
     <FileVersion>1.0.1.0</FileVersion>
     <PackageIcon>logo.png</PackageIcon>
@@ -31,8 +31,8 @@
 
   <ItemGroup>
     <PackageReference Include="com.etsoo.GoogleApi" Version="1.0.18" />
-    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="7.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
