@@ -10,7 +10,7 @@
         /// Location
         /// 位置
         /// </summary>
-        public Location? Location { get; init; }
+        public Location? Location { get; set; }
 
         /// <summary>
         /// Region
