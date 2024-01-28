@@ -15,11 +15,12 @@
     <Description>ETSOO Api Data Model
 亿速思维接口数据模型</Description>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
-    <Version>1.0.46</Version>
+    <Version>1.0.47</Version>
     <AssemblyVersion>1.0.1.0</AssemblyVersion>
     <FileVersion>1.0.1.0</FileVersion>
     <PackageIcon>logo.png</PackageIcon>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <IsAotCompatible>true</IsAotCompatible>
   </PropertyGroup>
 
   <ItemGroup>
@@ -30,7 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="com.etsoo.WebUtils" Version="1.0.48" />
+    <PackageReference Include="com.etsoo.WebUtils" Version="1.0.49" />
   </ItemGroup>
 
 </Project>
