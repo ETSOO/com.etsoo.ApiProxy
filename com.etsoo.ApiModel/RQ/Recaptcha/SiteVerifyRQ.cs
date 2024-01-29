@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace com.etsoo.ApiModel.RQ.Recaptcha
+﻿namespace com.etsoo.ApiModel.RQ.Recaptcha
 {
     /// <summary>
     /// Site verification request data
@@ -11,7 +9,6 @@ namespace com.etsoo.ApiModel.RQ.Recaptcha
         /// <summary>
         /// The user response token provided by the reCAPTCHA client-side integration on your site
         /// </summary>
-        [Required]
         public required string Response { get; init; }
 
         /// <summary>

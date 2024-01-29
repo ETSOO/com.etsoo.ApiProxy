@@ -1,9 +1,12 @@
-﻿namespace com.etsoo.ApiModel.Dto.SmartERP.MessageQueue
+﻿using System.Text.Json.Serialization;
+
+namespace com.etsoo.ApiModel.Dto.SmartERP.MessageQueue
 {
     /// <summary>
     /// Operation message respone
     /// 操作信息响应
     /// </summary>
+    [JsonDerivedType(typeof(OperationMessageDto))]
     public record OperationMessageResponse
     {
         /// <summary>

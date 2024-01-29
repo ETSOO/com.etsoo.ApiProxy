@@ -1,9 +1,12 @@
-﻿namespace com.etsoo.ApiModel.Dto.Maps
+﻿using System.Text.Json.Serialization;
+
+namespace com.etsoo.ApiModel.Dto.Maps
 {
     /// <summary>
     /// Place base data
     /// 地点基础数据
     /// </summary>
+    [JsonDerivedType(typeof(PlaceCommon))]
     public record PlaceBase
     {
         /// <summary>

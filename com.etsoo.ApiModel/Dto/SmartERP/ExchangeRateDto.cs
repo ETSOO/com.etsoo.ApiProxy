@@ -1,9 +1,12 @@
-﻿namespace com.etsoo.ApiModel.Dto.SmartERP
+﻿using System.Text.Json.Serialization;
+
+namespace com.etsoo.ApiModel.Dto.SmartERP
 {
     /// <summary>
     /// Exchange rate data
     /// 汇率数据
     /// </summary>
+    [JsonDerivedType(typeof(CurrencyDto))]
     public record ExchangeRateDto
     {
         /// <summary>

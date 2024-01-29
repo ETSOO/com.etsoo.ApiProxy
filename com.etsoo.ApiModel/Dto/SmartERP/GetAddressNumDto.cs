@@ -1,9 +1,12 @@
-﻿namespace com.etsoo.ApiModel.Dto.SmartERP
+﻿using System.Text.Json.Serialization;
+
+namespace com.etsoo.ApiModel.Dto.SmartERP
 {
     /// <summary>
     /// Get address data by Num
     /// 从数字编号获取地址信息
     /// </summary>
+    [JsonDerivedType(typeof(PinDto))]
     public record GetAddressNumDto
     {
         /// <summary>
