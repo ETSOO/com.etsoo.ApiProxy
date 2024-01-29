@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using com.etsoo.ApiModel.Dto.Maps;
+using System.Text.Json.Serialization;
 
 namespace com.etsoo.ApiModel
 {
@@ -29,6 +30,8 @@ namespace com.etsoo.ApiModel
     [JsonSerializable(typeof(RQ.SmartERP.ParsePlaceRQ))]
     [JsonSerializable(typeof(RQ.SmartERP.QRCodeOptions))]
     [JsonSerializable(typeof(RQ.SmartERP.StateListRQ))]
+
+    [JsonSerializable(typeof(IEnumerable<PlaceCommon>))]
     public partial class ApiModelJsonSerializerContext : JsonSerializerContext
     {
     }
