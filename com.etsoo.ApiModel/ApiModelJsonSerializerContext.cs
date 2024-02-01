@@ -3,6 +3,8 @@ using System.Text.Json.Serialization;
 
 namespace com.etsoo.ApiModel
 {
+    [JsonSourceGenerationOptions(PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase, DictionaryKeyPolicy = JsonKnownNamingPolicy.CamelCase, PropertyNameCaseInsensitive = true)]
+
     [JsonSerializable(typeof(Dto.Maps.PlaceAutocomplete))]
     [JsonSerializable(typeof(Dto.Maps.PlaceBase))]
     [JsonSerializable(typeof(Dto.Recaptcha.SiteVerifyDto))]
