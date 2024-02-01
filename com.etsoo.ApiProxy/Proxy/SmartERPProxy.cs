@@ -1,10 +1,10 @@
-﻿using com.etsoo.ApiModel.Dto.Maps;
+﻿using com.etsoo.ApiModel;
+using com.etsoo.ApiModel.Dto.Maps;
 using com.etsoo.ApiModel.Dto.SmartERP;
 using com.etsoo.ApiModel.RQ.Maps;
 using com.etsoo.ApiModel.RQ.SmartERP;
 using com.etsoo.ApiProxy.Defs;
 using com.etsoo.ApiProxy.Options;
-using com.etsoo.Utils;
 using com.etsoo.Utils.Serialization;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.DependencyInjection;
@@ -83,7 +83,7 @@ namespace com.etsoo.ApiProxy.Proxy
         /// <returns>Result</returns>
         public async Task<string?> AuthorizeApiServiceAsync(int serviceId, string rq, CancellationToken cancellationToken = default)
         {
-            var response = await _httpClient.PostAsJsonAsync($"Public/AuthorizeApiService/{serviceId}", rq, cancellationToken);
+            var response = await _httpClient.PostAsJsonAsync($"Public/AuthorizeApiService/{serviceId}", rq, ApiModelJsonSerializerContext.Default.String, cancellationToken);
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadAsStringAsync(cancellationToken);
         }
@@ -97,9 +97,9 @@ namespace com.etsoo.ApiProxy.Proxy
         /// <returns>Result</returns>
         public async Task<IEnumerable<string?>?> AuthorizeApiServicesAsync(AuthorizeApiServicesRQ rq, CancellationToken cancellationToken = default)
         {
-            var response = await _httpClient.PostAsJsonAsync($"Public/AuthorizeApiServices", rq, cancellationToken);
+            var response = await _httpClient.PostAsJsonAsync($"Public/AuthorizeApiServices", rq, ApiModelJsonSerializerContext.Default.AuthorizeApiServicesRQ, cancellationToken);
             response.EnsureSuccessStatusCode();
-            return await response.Content.ReadFromJsonAsync<IEnumerable<string?>>(SharedUtils.JsonDefaultSerializerOptions, cancellationToken);
+            return await response.Content.ReadFromJsonAsync(ApiModelJsonSerializerContext.Default.IEnumerableString, cancellationToken);
         }
 
         /// <summary>
@@ -111,10 +111,10 @@ namespace com.etsoo.ApiProxy.Proxy
         /// <returns>Result</returns>
         public async Task<IEnumerable<PlaceAutocomplete>?> AutocompleteAsync(PlaceQueryRQ rq, CancellationToken cancellationToken = default)
         {
-            var response = await _httpClient.PostAsJsonAsync("Address/AutoComplete", rq, cancellationToken);
+            var response = await _httpClient.PostAsJsonAsync("Address/AutoComplete", rq, ApiModelJsonSerializerContext.Default.PlaceQueryRQ, cancellationToken);
             response.EnsureSuccessStatusCode();
 
-            return await response.Content.ReadFromJsonAsync<IEnumerable<PlaceAutocomplete>>(cancellationToken: cancellationToken);
+            return await response.Content.ReadFromJsonAsync(ApiModelJsonSerializerContext.Default.IEnumerablePlaceAutocomplete, cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace com.etsoo.ApiProxy.Proxy
         /// <returns>Result</returns>
         public async Task<PlaceCommon?> GetPlaceDetailsAsync(string replaceId, string? language = null, CancellationToken cancellationToken = default)
         {
-            return await _httpClient.GetFromJsonAsync<PlaceCommon>($"Address/GetPlaceDetails/{HttpUtility.UrlEncode(replaceId)}/{(language == null ? string.Empty : HttpUtility.UrlEncode(language))}", SharedUtils.JsonDefaultSerializerOptions, cancellationToken);
+            return await _httpClient.GetFromJsonAsync($"Address/GetPlaceDetails/{HttpUtility.UrlEncode(replaceId)}/{(language == null ? string.Empty : HttpUtility.UrlEncode(language))}", ApiModelJsonSerializerContext.Default.PlaceCommon, cancellationToken);
         }
 
         /// <summary>
@@ -153,13 +153,14 @@ namespace com.etsoo.ApiProxy.Proxy
                 _cache,
                 _cacheHours,
                 () => $"{identifier}.{nameof(ParsePlaceAsync)}.{rq}",
-                async () =>
+                async (typeInfo) =>
                 {
-                    var response = await _httpClient.PostAsJsonAsync("Address/ParsePlace", rq, cancellationToken);
+                    var response = await _httpClient.PostAsJsonAsync("Address/ParsePlace", rq, ApiModelJsonSerializerContext.Default.ParsePlaceRQ, cancellationToken);
                     response.EnsureSuccessStatusCode();
 
-                    return await response.Content.ReadFromJsonAsync<ParsedPlaceDto>(cancellationToken: cancellationToken);
+                    return await response.Content.ReadFromJsonAsync(typeInfo, cancellationToken: cancellationToken);
                 },
+                ApiModelJsonSerializerContext.Default.ParsedPlaceDto,
                 new DistributedCacheEntryOptions
                 {
                     AbsoluteExpirationRelativeToNow = TimeSpan.FromDays(7)
@@ -176,10 +177,10 @@ namespace com.etsoo.ApiProxy.Proxy
         /// <returns>Result</returns>
         public async Task<IEnumerable<PlaceCommon>?> SearchPlaceAsync(PlaceQueryRQ rq, CancellationToken cancellationToken = default)
         {
-            var response = await _httpClient.PostAsJsonAsync("Address/SearchPlace", rq, cancellationToken);
+            var response = await _httpClient.PostAsJsonAsync("Address/SearchPlace", rq, ApiModelJsonSerializerContext.Default.PlaceQueryRQ, cancellationToken);
             response.EnsureSuccessStatusCode();
 
-            return await response.Content.ReadFromJsonAsync<IEnumerable<PlaceCommon>>(cancellationToken: cancellationToken);
+            return await response.Content.ReadFromJsonAsync(ApiModelJsonSerializerContext.Default.IEnumerablePlaceCommon, cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -191,10 +192,10 @@ namespace com.etsoo.ApiProxy.Proxy
         /// <returns></returns>
         public async ValueTask<PinDto?> ParsePinAsync(ParsePinRQ rq, CancellationToken cancellationToken = default)
         {
-            var response = await _httpClient.PostAsJsonAsync("Public/ParsePin", rq, cancellationToken);
+            var response = await _httpClient.PostAsJsonAsync("Public/ParsePin", rq, ApiModelJsonSerializerContext.Default.ParsePinRQ, cancellationToken);
             response.EnsureSuccessStatusCode();
 
-            return await response.Content.ReadFromJsonAsync<PinDto>(cancellationToken: cancellationToken);
+            return await response.Content.ReadFromJsonAsync(ApiModelJsonSerializerContext.Default.PinDto, cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -210,7 +211,8 @@ namespace com.etsoo.ApiProxy.Proxy
                 _cache,
                 _cacheHours,
                 () => $"{identifier}.{nameof(GetCurrenciesAsync)}.{language}",
-                () => _httpClient.GetFromJsonAsync<IEnumerable<CurrencyDto>>($"Public/GetCurrencies?language={language}", SharedUtils.JsonDefaultSerializerOptions, cancellationToken),
+                (typeInfo) => _httpClient.GetFromJsonAsync($"Public/GetCurrencies?language={language}", typeInfo, cancellationToken),
+                ApiModelJsonSerializerContext.Default.IEnumerableCurrencyDto,
                 new DistributedCacheEntryOptions
                 {
                     AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30)
@@ -230,7 +232,8 @@ namespace com.etsoo.ApiProxy.Proxy
                 _cache,
                 _cacheHours,
                 () => $"{identifier}.{nameof(ExchangeRateAsync)}.{currency}",
-                () => _httpClient.GetFromJsonAsync<ExchangeRateDto>($"Public/ExchangeRate/{currency}", SharedUtils.JsonDefaultSerializerOptions, cancellationToken),
+                (typeInfo) => _httpClient.GetFromJsonAsync($"Public/ExchangeRate/{currency}", typeInfo, cancellationToken),
+                ApiModelJsonSerializerContext.Default.ExchangeRateDto,
                 new DistributedCacheEntryOptions
                 {
                     AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30)
@@ -252,7 +255,7 @@ namespace com.etsoo.ApiProxy.Proxy
                 () => $"{identifier}.{nameof(QRCodeAsync)}.{rq}",
                 async () =>
                 {
-                    var response = await _httpClient.PostAsJsonAsync("Public/QRCode", rq, SharedUtils.JsonDefaultSerializerOptions, cancellationToken);
+                    var response = await _httpClient.PostAsJsonAsync("Public/QRCode", rq, ApiModelJsonSerializerContext.Default.QRCodeOptions, cancellationToken);
                     response.EnsureSuccessStatusCode();
 
                     return await response.Content.ReadAsStringAsync(cancellationToken: cancellationToken);
@@ -273,7 +276,8 @@ namespace com.etsoo.ApiProxy.Proxy
                 _cache,
                 _cacheHours,
                 () => $"{identifier}.{nameof(RegionListAsync)}.{key}",
-                () => _httpClient.GetFromJsonAsync<IEnumerable<AddressRegionDto>>($"Address/RegionList?{key}", SharedUtils.JsonDefaultSerializerOptions, cancellationToken),
+                (typeInfo) => _httpClient.GetFromJsonAsync($"Address/RegionList?{key}", typeInfo, cancellationToken),
+                ApiModelJsonSerializerContext.Default.IEnumerableAddressRegionDto,
                 cancellationToken: cancellationToken);
         }
 
@@ -291,7 +295,8 @@ namespace com.etsoo.ApiProxy.Proxy
                 _cache,
                 _cacheHours,
                 () => $"{identifier}.{nameof(StateListAsync)}.{key}",
-                () => _httpClient.GetFromJsonAsync<IEnumerable<AddressStateDto>>($"Address/StateList?{key}", SharedUtils.JsonDefaultSerializerOptions, cancellationToken),
+                (typeInfo) => _httpClient.GetFromJsonAsync($"Address/StateList?{key}", typeInfo, cancellationToken),
+                ApiModelJsonSerializerContext.Default.IEnumerableAddressStateDto,
                 cancellationToken: cancellationToken);
         }
 
@@ -309,7 +314,8 @@ namespace com.etsoo.ApiProxy.Proxy
                 _cache,
                 _cacheHours,
                 () => $"{identifier}.{nameof(CityListAsync)}.{key}",
-                () => _httpClient.GetFromJsonAsync<IEnumerable<AddressCityDto>>($"Address/CityList?{key}", SharedUtils.JsonDefaultSerializerOptions, cancellationToken),
+                (typeInfo) => _httpClient.GetFromJsonAsync($"Address/CityList?{key}", typeInfo, cancellationToken),
+                ApiModelJsonSerializerContext.Default.IEnumerableAddressCityDto,
                 cancellationToken: cancellationToken);
         }
 
@@ -327,7 +333,8 @@ namespace com.etsoo.ApiProxy.Proxy
                 _cache,
                 _cacheHours,
                 () => $"{identifier}.{nameof(DistrictListAsync)}.{key}",
-                () => _httpClient.GetFromJsonAsync<IEnumerable<AddressDistrictDto>>($"Address/DistrictList?{key}", SharedUtils.JsonDefaultSerializerOptions, cancellationToken),
+                (typeInfo) => _httpClient.GetFromJsonAsync($"Address/DistrictList?{key}", typeInfo, cancellationToken),
+                ApiModelJsonSerializerContext.Default.IEnumerableAddressDistrictDto,
                 cancellationToken: cancellationToken);
         }
 
@@ -343,7 +350,8 @@ namespace com.etsoo.ApiProxy.Proxy
                 _cache,
                 _cacheHours,
                 () => $"{identifier}.{nameof(SupportedCulturesAsync)}",
-                () => _httpClient.GetFromJsonAsync<IEnumerable<ListItem1>>("Public/SupportedCultures", SharedUtils.JsonDefaultSerializerOptions, cancellationToken),
+                (typeInfo) => _httpClient.GetFromJsonAsync("Public/SupportedCultures", typeInfo, cancellationToken),
+                ApiModelJsonSerializerContext.Default.IEnumerableListItem1,
                 cancellationToken: cancellationToken);
         }
     }

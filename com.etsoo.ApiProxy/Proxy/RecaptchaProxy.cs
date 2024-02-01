@@ -1,4 +1,5 @@
-﻿using com.etsoo.ApiModel.Dto.Recaptcha;
+﻿using com.etsoo.ApiModel;
+using com.etsoo.ApiModel.Dto.Recaptcha;
 using com.etsoo.ApiModel.RQ.Recaptcha;
 using com.etsoo.ApiProxy.Configs;
 using com.etsoo.ApiProxy.Defs;
@@ -86,7 +87,7 @@ namespace com.etsoo.ApiProxy.Proxy
 
             response.EnsureSuccessStatusCode();
 
-            var result = await response.Content.ReadFromJsonAsync<SiteVerifyDto>(cancellationToken: cancellationToken);
+            var result = await response.Content.ReadFromJsonAsync(ApiModelJsonSerializerContext.Default.SiteVerifyDto, cancellationToken: cancellationToken);
             if (result == null)
             {
                 _logger.LogDebug("No Data Returned for {@data}", data);

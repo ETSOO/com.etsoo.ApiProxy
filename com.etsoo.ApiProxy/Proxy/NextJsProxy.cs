@@ -1,6 +1,7 @@
 ﻿using com.etsoo.ApiProxy.Configs;
 using com.etsoo.ApiProxy.Defs;
 using com.etsoo.Utils.Actions;
+using com.etsoo.Utils.Serialization;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -82,7 +83,7 @@ namespace com.etsoo.ApiProxy.Proxy
                 var response = await _httpClient.GetAsync($"api/revalidate?{p}", cancellationToken);
                 if (response.IsSuccessStatusCode)
                 {
-                    return await response.Content.ReadFromJsonAsync<ActionResult>(cancellationToken: cancellationToken) ?? new ActionResult { Title = "No Content" };
+                    return await response.Content.ReadFromJsonAsync(CommonJsonSerializerContext.Default.ActionResult, cancellationToken: cancellationToken) ?? new ActionResult { Title = "No Content" };
                 }
                 else
                 {

@@ -1,6 +1,8 @@
-﻿using com.etsoo.ApiModel.Dto.Maps;
+﻿using com.etsoo.ApiModel;
+using com.etsoo.ApiModel.Dto.Maps;
 using com.etsoo.ApiProxy.Configs;
 using com.etsoo.ApiProxy.Defs;
+using com.etsoo.GoogleApi;
 using com.etsoo.GoogleApi.Cloud.RQ;
 using com.etsoo.GoogleApi.Maps.Place;
 using com.etsoo.GoogleApi.Maps.Place.RQ;
@@ -77,10 +79,10 @@ namespace com.etsoo.ApiProxy.Proxy
         /// <returns>Result</returns>
         public async Task<AutocompleteResponse?> AutoCompleteAsync(AutocompleteRQ rq, CancellationToken cancellationToken = default)
         {
-            var response = await _httpClient.PostAsJsonAsync("Google/AutoComplete", rq, cancellationToken);
+            var response = await _httpClient.PostAsJsonAsync("Google/AutoComplete", rq, GoogleApiJsonSerializerContext.Default.AutocompleteRQ, cancellationToken);
             response.EnsureSuccessStatusCode();
 
-            return await response.Content.ReadFromJsonAsync<AutocompleteResponse>(cancellationToken: cancellationToken);
+            return await response.Content.ReadFromJsonAsync(GoogleApiJsonSerializerContext.Default.AutocompleteResponse, cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -92,10 +94,10 @@ namespace com.etsoo.ApiProxy.Proxy
         /// <returns>Result</returns>
         public async Task<FindPlaceResponse?> FindPlaceAsync(FindPlaceRQ rq, CancellationToken cancellationToken = default)
         {
-            var response = await _httpClient.PostAsJsonAsync("Google/FindPlace", rq, cancellationToken);
+            var response = await _httpClient.PostAsJsonAsync("Google/FindPlace", rq, GoogleApiJsonSerializerContext.Default.FindPlaceRQ, cancellationToken);
             response.EnsureSuccessStatusCode();
 
-            return await response.Content.ReadFromJsonAsync<FindPlaceResponse>(cancellationToken: cancellationToken);
+            return await response.Content.ReadFromJsonAsync(GoogleApiJsonSerializerContext.Default.FindPlaceResponse, cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -107,10 +109,10 @@ namespace com.etsoo.ApiProxy.Proxy
         /// <returns>Result</returns>
         public async Task<SearchPlaceResponse?> SearchPlaceAsync(SearchPlaceRQ rq, CancellationToken cancellationToken = default)
         {
-            var response = await _httpClient.PostAsJsonAsync("Google/SearchPlace", rq, cancellationToken);
+            var response = await _httpClient.PostAsJsonAsync("Google/SearchPlace", rq, GoogleApiJsonSerializerContext.Default.SearchPlaceRQ, cancellationToken);
             response.EnsureSuccessStatusCode();
 
-            return await response.Content.ReadFromJsonAsync<SearchPlaceResponse>(cancellationToken: cancellationToken);
+            return await response.Content.ReadFromJsonAsync(GoogleApiJsonSerializerContext.Default.SearchPlaceResponse, cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -122,10 +124,10 @@ namespace com.etsoo.ApiProxy.Proxy
         /// <returns>Result</returns>
         public async Task<IEnumerable<PlaceCommon>?> SearchCommonPlaceAsync(SearchPlaceRQ rq, CancellationToken cancellationToken = default)
         {
-            var response = await _httpClient.PostAsJsonAsync("Google/SearchCommonPlace", rq, cancellationToken);
+            var response = await _httpClient.PostAsJsonAsync("Google/SearchCommonPlace", rq, GoogleApiJsonSerializerContext.Default.SearchPlaceRQ, cancellationToken);
             response.EnsureSuccessStatusCode();
 
-            return await response.Content.ReadFromJsonAsync<IEnumerable<PlaceCommon>>(cancellationToken: cancellationToken);
+            return await response.Content.ReadFromJsonAsync(ApiModelJsonSerializerContext.Default.IEnumerablePlaceCommon, cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -141,13 +143,13 @@ namespace com.etsoo.ApiProxy.Proxy
                 _cache,
                 _cacheHours,
                 () => $"{identifier}.{nameof(GetPlaceDetailsAsync)}.{rq.CreateKey()}",
-                async () =>
+                async (typeInfo) =>
                 {
-                    var response = await _httpClient.PostAsJsonAsync("Google/GetPlaceDetails", rq, cancellationToken);
+                    var response = await _httpClient.PostAsJsonAsync("Google/GetPlaceDetails", rq, GoogleApiJsonSerializerContext.Default.GetDetailsRQ, cancellationToken);
                     response.EnsureSuccessStatusCode();
 
-                    return await response.Content.ReadFromJsonAsync<GetDetailsResponse>(cancellationToken: cancellationToken);
-                }, cancellationToken: cancellationToken);
+                    return await response.Content.ReadFromJsonAsync(typeInfo, cancellationToken: cancellationToken);
+                }, GoogleApiJsonSerializerContext.Default.GetDetailsResponse, cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -165,7 +167,7 @@ namespace com.etsoo.ApiProxy.Proxy
                 () => $"{identifier}.{nameof(TranslateTextAsync)}.{rq.Text}.{rq.TargetLanguageCode}",
                 async () =>
                 {
-                    var response = await _httpClient.PostAsJsonAsync("Google/TranslateText", rq, cancellationToken);
+                    var response = await _httpClient.PostAsJsonAsync("Google/TranslateText", rq, GoogleApiJsonSerializerContext.Default.TranslateTextRQ, cancellationToken);
                     response.EnsureSuccessStatusCode();
 
                     return await response.Content.ReadAsStringAsync(cancellationToken: cancellationToken);
