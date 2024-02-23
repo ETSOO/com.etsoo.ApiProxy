@@ -61,11 +61,12 @@ namespace com.etsoo.ApiProxy.Proxy
         /// Async on demand revalidataion
         /// 异步按需重新验证
         /// </summary>
+        /// <param name="cancellationToken">Cancellation token</param>
         /// <param name="urls">Urls to revalidate</param>
         /// <returns>Result</returns>
-        public async Task<IActionResult> OnDemandRevalidateAsync(params string[] urls)
+        public async Task<IActionResult> OnDemandRevalidateAsync(CancellationToken cancellationToken, params string[] urls)
         {
-            return await OnDemandRevalidateAsync(urls, default);
+            return await OnDemandRevalidateAsync(urls, cancellationToken);
         }
 
         /// <summary>
@@ -75,7 +76,7 @@ namespace com.etsoo.ApiProxy.Proxy
         /// <param name="urls">Urls to revalidate</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Result</returns>
-        public async Task<IActionResult> OnDemandRevalidateAsync(IEnumerable<string> urls, CancellationToken cancellationToken)
+        public async Task<IActionResult> OnDemandRevalidateAsync(IEnumerable<string> urls, CancellationToken cancellationToken = default)
         {
             try
             {
