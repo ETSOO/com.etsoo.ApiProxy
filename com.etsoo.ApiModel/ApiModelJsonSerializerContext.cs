@@ -3,10 +3,15 @@ using System.Text.Json.Serialization;
 
 namespace com.etsoo.ApiModel
 {
-    [JsonSourceGenerationOptions(PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase, DictionaryKeyPolicy = JsonKnownNamingPolicy.CamelCase, PropertyNameCaseInsensitive = true)]
+    [JsonSourceGenerationOptions(
+        PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
+        DictionaryKeyPolicy = JsonKnownNamingPolicy.CamelCase,
+        PropertyNameCaseInsensitive = true,
+        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+    )]
 
-    [JsonSerializable(typeof(IEnumerable<Dto.Maps.PlaceAutocomplete>))]
-    [JsonSerializable(typeof(Dto.Maps.PlaceBase))]
+    [JsonSerializable(typeof(IEnumerable<PlaceAutocomplete>))]
+    [JsonSerializable(typeof(PlaceBase))]
     [JsonSerializable(typeof(Dto.Recaptcha.SiteVerifyDto))]
     [JsonSerializable(typeof(Dto.SmartERP.MessageQueue.ApiServiceKey))]
     [JsonSerializable(typeof(Dto.SmartERP.MessageQueue.OperationMessageResponse))]
