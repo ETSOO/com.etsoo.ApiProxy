@@ -27,7 +27,7 @@ namespace com.etsoo.ApiProxyTests
         [TestMethod]
         public async Task OnDemandRevalidateAsyncTests()
         {
-            var result = await proxy.OnDemandRevalidateAsync("/contact", "/about");
+            var result = await proxy.OnDemandRevalidateAsync(default, "/contact", "/about");
             Assert.IsFalse(result.Ok);
             if (result.Status != null) Assert.AreEqual(404, result.Status);
         }

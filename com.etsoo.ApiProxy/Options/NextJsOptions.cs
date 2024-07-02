@@ -22,7 +22,12 @@
         /// Base address of the client
         /// 客户端的基地址
         /// </summary>
-        public string? BaseAddress { get; init; }
-        public string Token { get; init; } = default!;
+        public string? BaseAddress { get; set; }
+
+        /// <summary>
+        /// Token
+        /// 令牌
+        /// </summary>
+        public string Token { get; set; } = string.Empty;
     }
 }

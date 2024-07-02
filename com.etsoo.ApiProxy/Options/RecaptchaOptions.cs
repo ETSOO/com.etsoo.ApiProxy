@@ -22,12 +22,12 @@
         /// Base address of the client
         /// 客户端的基地址
         /// </summary>
-        public string? BaseAddress { get; init; }
+        public string? BaseAddress { get; set; }
 
         /// <summary>
         /// The shared key between your site and reCAPTCHA
         /// </summary>
-        public string Secret { get; init; } = default!;
+        public string Secret { get; set; } = string.Empty;
 
     }
 }

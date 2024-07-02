@@ -24,12 +24,12 @@ namespace com.etsoo.ApiProxy.Options
         /// Base address of the client
         /// 客户端的基地址
         /// </summary>
-        public string? BaseAddress { get; init; }
+        public string? BaseAddress { get; set; }
 
         /// <summary>
         /// Cache hours
         /// 缓存小时数
         /// </summary>
-        public double CacheHours { get; init; } = 24;
+        public double CacheHours { get; set; } = 24;
     }
 }

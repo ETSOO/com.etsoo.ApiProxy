@@ -11,6 +11,6 @@
         /// Base address of the client
         /// 客户端的基地址
         /// </summary>
-        string? BaseAddress { get; init; }
+        string? BaseAddress { get; set; }
     }
 }

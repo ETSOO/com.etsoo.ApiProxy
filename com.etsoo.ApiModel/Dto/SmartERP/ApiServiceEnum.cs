@@ -34,6 +34,18 @@
         /// Business Wechat
         /// 企业微信
         /// </summary>
-        WechatBusiness = 5
+        WechatBusiness = 5,
+
+        /// <summary>
+        /// Alipay service account
+        /// 支付宝服务号
+        /// </summary>
+        Alipay = 6,
+
+        /// <summary>
+        /// DingDing
+        /// 钉钉
+        /// </summary>
+        DingDing = 7
     }
 }
