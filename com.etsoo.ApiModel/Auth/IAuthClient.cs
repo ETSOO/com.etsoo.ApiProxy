@@ -38,5 +38,14 @@ namespace com.etsoo.ApiModel.Auth
         /// <param name="state">Request state</param>
         /// <returns>Action result & user information</returns>
         ValueTask<(IActionResult result, AuthUserInfo? userInfo)> GetUserInfoAsync(HttpRequest request, string state);
+
+        /// <summary>
+        /// Get user info from callback request
+        /// 从回调请求获取用户信息
+        /// </summary>
+        /// <param name="request">Callback request</param>
+        /// <param name="stateCallback">Callback to verify request state</param>
+        /// <returns>Action result & user information</returns>
+        ValueTask<(IActionResult result, AuthUserInfo? userInfo)> GetUserInfoAsync(HttpRequest request, Func<string, bool> stateCallback);
     }
 }
