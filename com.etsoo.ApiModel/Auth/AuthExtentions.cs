@@ -26,7 +26,7 @@ namespace com.etsoo.ApiModel.Auth
         /// </summary>
         /// <param name="request">HTTP Request</param>
         /// <returns>Action</returns>
-        public static string GetRequestAction(HttpRequest request)
+        public static string GetRequestAction(this HttpRequest request)
         {
             var action = request.RouteValues.LastOrDefault().Value?.ToString()
                 ?? (Uri.TryCreate(request.Path, UriKind.Absolute, out var uri) ? uri.Segments.Last() : string.Empty);
