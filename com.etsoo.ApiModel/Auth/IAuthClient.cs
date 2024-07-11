@@ -56,8 +56,9 @@ namespace com.etsoo.ApiModel.Auth
         /// <param name="request">Callback request</param>
         /// <param name="state">Request state</param>
         /// <param name="action">Request action</param>
+        /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Action result & user information</returns>
-        ValueTask<(IActionResult result, AuthUserInfo? userInfo)> GetUserInfoAsync(HttpRequest request, string state, string? action = null);
+        ValueTask<(IActionResult result, AuthUserInfo? userInfo)> GetUserInfoAsync(HttpRequest request, string state, string? action = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get user info from callback request
@@ -66,7 +67,8 @@ namespace com.etsoo.ApiModel.Auth
         /// <param name="request">Callback request</param>
         /// <param name="stateCallback">Callback to verify request state</param>
         /// <param name="action">Request action</param>
+        /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Action result & user information</returns>
-        ValueTask<(IActionResult result, AuthUserInfo? userInfo)> GetUserInfoAsync(HttpRequest request, Func<string, bool> stateCallback, string? action = null);
+        ValueTask<(IActionResult result, AuthUserInfo? userInfo)> GetUserInfoAsync(HttpRequest request, Func<string, bool> stateCallback, string? action = null, CancellationToken cancellationToken = default);
     }
 }
