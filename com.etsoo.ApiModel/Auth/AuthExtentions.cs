@@ -29,7 +29,7 @@ namespace com.etsoo.ApiModel.Auth
         public static string GetRequestAction(this HttpRequest request)
         {
             var action = request.RouteValues.LastOrDefault().Value?.ToString()
-                ?? (Uri.TryCreate(request.Path, UriKind.Absolute, out var uri) ? uri.Segments.Last() : string.Empty);
+                ?? request.Path.Value?.TrimEnd('/').Split('/').LastOrDefault() ?? string.Empty;
             return action.Trim('/');
         }
     }
