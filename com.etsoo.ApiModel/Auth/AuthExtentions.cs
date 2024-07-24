@@ -9,10 +9,10 @@ namespace com.etsoo.ApiModel.Auth
     public static class AuthExtentions
     {
         /// <summary>
-        /// Sign in action
+        /// Log in action
         /// 登录动作
         /// </summary>
-        public const string SignInAction = "SignIn";
+        public const string LogInAction = "LogIn";
 
         /// <summary>
         /// Sign up action
