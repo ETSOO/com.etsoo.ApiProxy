@@ -10,13 +10,13 @@ namespace com.etsoo.ApiModel.Auth
     public interface IAuthClient
     {
         /// <summary>
-        /// Get sign in URL
+        /// Get login in URL
         /// 获取登录URL
         /// </summary>
         /// <param name="state">Request state</param>
         /// <param name="loginHint">Login hint</param>
         /// <returns>URL</returns>
-        string GetSignInUrl(string state, string? loginHint = null);
+        string GetLogInUrl(string state, string? loginHint = null);
 
         /// <summary>
         /// Get sign up URL
