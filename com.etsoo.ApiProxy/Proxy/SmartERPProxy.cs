@@ -66,7 +66,7 @@ namespace com.etsoo.ApiProxy.Proxy
             var domain = options.BaseAddress;
 
             if (string.IsNullOrEmpty(domain)) domain = "cn";
-            if (domain.Length < 6) domain = $"https://{domain}api.etsoo.com/api/";
+            if (domain.Length < 6) domain = $"https://{domain}.etsoo.com/api/";
 
             client.BaseAddress = new Uri(domain);
 
