@@ -1,4 +1,4 @@
-﻿using com.etsoo.ApiModel.Dto.Country;
+﻿using com.etsoo.Utils.Serialization.Country;
 
 namespace com.etsoo.ApiModel.Utils
 {
