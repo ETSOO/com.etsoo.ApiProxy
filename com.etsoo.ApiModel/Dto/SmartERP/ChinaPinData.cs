@@ -31,9 +31,9 @@
         public required DateTimeOffset Birthday { get; init; }
 
         /// <summary>
-        /// Gender
-        /// 性别
+        /// Is female
+        /// 是否为女性
         /// </summary>
-        public required string Gender { get; init; }
+        public required bool IsFemale { get; init; }
     }
 }
