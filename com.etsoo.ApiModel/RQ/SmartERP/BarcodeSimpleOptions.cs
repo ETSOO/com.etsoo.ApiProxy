@@ -3,10 +3,10 @@
 namespace com.etsoo.ApiModel.RQ.SmartERP
 {
     /// <summary>
-    /// QR code options
+    /// Barcode options
     /// 二维码选项
     /// </summary>
-    public record QRCodeOptions
+    public record BarcodeSimpleOptions
     {
         /// <summary>
         /// Background color

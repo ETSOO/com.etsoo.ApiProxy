@@ -1,4 +1,4 @@
-﻿using com.etsoo.ApiModel.Dto.SmartERP;
+﻿using com.etsoo.ApiModel.Dto.Country;
 
 namespace com.etsoo.ApiModel.Utils
 {
@@ -8,14 +8,14 @@ namespace com.etsoo.ApiModel.Utils
     /// </summary>
     public class ExchangeAmount
     {
-        readonly IEnumerable<CurrencyDto> currencies;
+        readonly IEnumerable<CurrencyExchangeData> currencies;
 
         /// <summary>
         /// Constructor
         /// 构造函数
         /// </summary>
         /// <param name="currencies">Currencies</param>
-        public ExchangeAmount(IEnumerable<CurrencyDto> currencies)
+        public ExchangeAmount(IEnumerable<CurrencyExchangeData> currencies)
         {
             this.currencies = currencies;
         }
