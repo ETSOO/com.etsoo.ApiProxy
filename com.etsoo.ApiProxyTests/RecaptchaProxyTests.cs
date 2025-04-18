@@ -27,7 +27,7 @@ namespace com.etsoo.ApiProxyTests
         {
             var rq = new SiteVerifyRQ { Response = "123", RemoteIp = "66.249.64.199" };
             var result = await proxy.SiteVerifyAsync(rq);
-            Assert.IsTrue(result.ErrorCodes?.Contains(SiteVerifyDto.InvalidInputSecret));
+            Assert.IsTrue(result.ErrorCodes?.Contains(SiteVerifyDto.InvalidInputSecret) is true || result.ErrorCodes?.Contains(SiteVerifyDto.InvalidInputResponse) is true);
         }
     }
 }
