@@ -51,5 +51,11 @@ namespace com.etsoo.ApiModel.Dto.SmartERP.MessageQueue
         /// 内容
         /// </summary>
         public required string Body { get; init; }
+
+        /// <summary>
+        /// Organization ID
+        /// 机构编号
+        /// </summary>
+        public int? OrgId { get; init; }
     }
 }

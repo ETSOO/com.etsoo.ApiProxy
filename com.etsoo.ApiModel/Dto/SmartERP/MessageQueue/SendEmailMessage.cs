@@ -73,5 +73,11 @@ namespace com.etsoo.ApiModel.Dto.SmartERP.MessageQueue
         /// 优先级
         /// </summary>
         public EmailPriority? Priority { get; init; }
+
+        /// <summary>
+        /// Organization ID
+        /// 机构编号
+        /// </summary>
+        public int? OrgId { get; init; }
     }
 }
