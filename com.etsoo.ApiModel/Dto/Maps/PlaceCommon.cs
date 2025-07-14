@@ -40,10 +40,22 @@ namespace com.etsoo.ApiModel.Dto.Maps
         public string? District { get; init; }
 
         /// <summary>
-        /// Postcode
+        /// Route
+        /// 线路
+        /// </summary>
+        public string? Route { get; init; }
+
+        /// <summary>
+        /// Street and house number
+        /// 街道和门牌号
+        /// </summary>
+        public string? Street { get; init; }
+
+        /// <summary>
+        /// Postal code
         /// 邮政编码
         /// </summary>
-        public string? Postcode { get; init; }
+        public string? PostalCode { get; init; }
     }
 
     /// <summary>
