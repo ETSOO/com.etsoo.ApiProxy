@@ -27,8 +27,8 @@ namespace com.etsoo.ApiProxyTests.SmartERP
         [TestMethod]
         public async Task QRCodeAsyncTests()
         {
-            var qrcode = await _service.CreateBarcodeAsync(new BarcodeSimpleOptions { Foreground = Color.Red, Content = "https://www.etsoo.com" });
-            Assert.IsTrue(qrcode.StartsWith("data:image/png;base64,"));
+            var qrcode = await _service.CreateBarcodeAsync(new BarcodeSimpleOptions { Foreground = Color.Red, Content = "https://www.etsoo.com" }, TestContext.CancellationToken);
+            Assert.StartsWith("data:image/png;base64,", qrcode);
         }
 
         [TestMethod]
@@ -81,8 +81,10 @@ namespace com.etsoo.ApiProxyTests.SmartERP
                 Region = "CN",
                 Provider = ApiProvider.Baidu
             };
-            var places = await _service.QueryPlaceAsync(rq);
+            var places = await _service.QueryPlaceAsync(rq, TestContext.CancellationToken);
             Assert.IsTrue(places?.Any(p => p.FormattedAddress.Equals("山东省青岛市崂山区清溪路88号玫瑰庭院")));
         }
+
+        public TestContext TestContext { get; set; }
     }
 }
