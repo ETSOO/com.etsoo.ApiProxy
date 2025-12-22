@@ -49,5 +49,11 @@ namespace com.etsoo.ApiModel.RQ.Maps
         /// 方圆距离，单位为米
         /// </summary>
         public int? Radius { get; init; }
+
+        /// <summary>
+        /// Specify the number of results to display per page
+        /// 指定每页显示的结果数
+        /// </summary>
+        public int PageSize { get; init; }
     }
 }
