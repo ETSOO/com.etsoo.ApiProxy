@@ -6,7 +6,22 @@
     /// </summary>
     public enum ApiProvider : byte
     {
+        /// <summary>
+        /// Google Map
+        /// 谷歌地图
+        /// </summary>
         Google,
-        Baidu
+
+        /// <summary>
+        /// Baidu Map
+        /// 百度地图
+        /// </summary>
+        Baidu,
+
+        /// <summary>
+        /// Amap
+        /// 阿里高德地图
+        /// </summary>
+        Amap
     }
 }
