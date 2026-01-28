@@ -1,6 +1,7 @@
 ﻿using com.etsoo.ApiModel.Dto.SmartERP.MessageQueue;
 using com.etsoo.ApiModel.RQ.SmartERP;
 using com.etsoo.Utils.Actions;
+using Microsoft.AspNetCore.Http;
 
 namespace com.etsoo.ApiProxy.Defs.SmartERP
 {
@@ -39,5 +40,18 @@ namespace com.etsoo.ApiProxy.Defs.SmartERP
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Task</returns>
         Task<ActionResult<StringIdData>?> SendSMSAsync(TokenAuthRQ auth, SendSMSMessage message, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Upload files
+        /// 上传文件
+        /// </summary>
+        /// <param name="auth">Token authorization</param>
+        /// <param name="files">Files to upload</param>
+        /// <param name="id">Identifier</param>
+        /// <param name="folder">Folder name</param>
+        /// <param name="sign">Signature</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns>Result</returns>
+        Task<IActionResult?> UploadFilesAsync(TokenAuthRQ auth, IFormFileCollection files, long id, string folder, string sign, CancellationToken cancellationToken = default);
     }
 }

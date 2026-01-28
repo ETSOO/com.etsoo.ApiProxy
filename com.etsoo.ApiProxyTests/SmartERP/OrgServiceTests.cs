@@ -2,6 +2,8 @@
 using com.etsoo.ApiProxy.Defs.SmartERP;
 using com.etsoo.ApiProxy.Options;
 using com.etsoo.ApiProxy.Proxy;
+using Microsoft.AspNetCore.Http;
+using System.Text;
 
 namespace com.etsoo.ApiProxyTests.SmartERP
 {
@@ -25,7 +27,7 @@ namespace com.etsoo.ApiProxyTests.SmartERP
         public async Task FormatHtmlContentAsyncTests()
         {
             var original = "Hello, world! <b>How</b> do I use the <p>PipeReader for reading a JSON flatfile?</p><p><br/></p>";
-            var result = await _service.FormatHtmlContentAsync(TestServiceExtentions.DefaultAuth, original);
+            var result = await _service.FormatHtmlContentAsync(TestServiceExtentions.DefaultAuth, original, TestContext.CancellationToken);
             Assert.AreEqual("<p>Hello, world! <b>How</b> do I use the </p><p>PipeReader for reading a JSON flatfile?</p>", result);
         }
 
@@ -38,7 +40,7 @@ namespace com.etsoo.ApiProxyTests.SmartERP
                 Body = "<p>如果意外收到该邮件，请忽略。</p><p>If you received this email by accident, please ignore it.</p>",
                 To = ["info@etsoo.com"]
             };
-            var result = await _service.SendEmailAsync(TestServiceExtentions.DefaultAuth, message);
+            var result = await _service.SendEmailAsync(TestServiceExtentions.DefaultAuth, message, TestContext.CancellationToken);
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Ok);
         }
@@ -54,9 +56,26 @@ namespace com.etsoo.ApiProxyTests.SmartERP
                 To = ["13853279130"],
                 Body = "123456"
             };
-            var result = await _service.SendSMSAsync(TestServiceExtentions.DefaultAuth, message);
+            var result = await _service.SendSMSAsync(TestServiceExtentions.DefaultAuth, message, TestContext.CancellationToken);
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Ok);
         }
+
+        [TestMethod]
+        public async Task UploadFilesAsyncTests()
+        {
+            var files = new FormFileCollection();
+
+            var fileStream = new MemoryStream();
+            await fileStream.WriteAsync(Encoding.UTF8.GetBytes("Hello, world!"), TestContext.CancellationToken);
+            files.Add(new FormFile(fileStream, 0, fileStream.Length, "file", "filename.txt"));
+
+            var result = await _service.UploadFilesAsync(TestServiceExtentions.DefaultAuth, files, 1, "Test", "", TestContext.CancellationToken);
+            
+            Assert.IsNotNull(result);
+            Assert.IsFalse(result.Ok);
+        }
+
+        public TestContext TestContext { get; set; }
     }
 }

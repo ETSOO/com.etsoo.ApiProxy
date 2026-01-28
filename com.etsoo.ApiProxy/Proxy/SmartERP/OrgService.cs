@@ -4,7 +4,12 @@ using com.etsoo.ApiModel.RQ.SmartERP;
 using com.etsoo.ApiProxy.Defs.SmartERP;
 using com.etsoo.Utils.Actions;
 using com.etsoo.Utils.Serialization;
+using Google.Protobuf;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using System.Net.Http.Json;
+using static Google.Cloud.Iam.V1.AuditConfigDelta.Types;
+using static Google.Rpc.Context.AttributeContext.Types;
 
 namespace com.etsoo.ApiProxy.Proxy.SmartERP
 {
@@ -97,6 +102,53 @@ namespace com.etsoo.ApiProxy.Proxy.SmartERP
             response.EnsureSuccessStatusCode();
 
             return await response.Content.ReadFromJsonAsync(CommonJsonSerializerContext.Default.ActionResultStringIdData, cancellationToken);
+        }
+
+        /// <summary>
+        /// Upload files
+        /// 上传文件
+        /// </summary>
+        /// <param name="auth">Token authorization</param>
+        /// <param name="files">Files to upload</param>
+        /// <param name="id">Identifier</param>
+        /// <param name="folder">Folder name</param>
+        /// <param name="sign">Signature</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns>Result</returns>
+        public async Task<IActionResult?> UploadFilesAsync(TokenAuthRQ auth, IFormFileCollection files, long id, string folder, string sign, CancellationToken cancellationToken = default)
+        {
+            var form = new MultipartFormDataContent
+            {
+                { new StringContent(sign), nameof(sign) }
+            };
+
+            foreach (var file in files)
+            {
+                var streamContent = new StreamContent(file.OpenReadStream());
+                if(file.Headers != null)
+                {
+                    foreach (var header in file.Headers)
+                    {
+                        streamContent.Headers.TryAddWithoutValidation(header.Key, [.. header.Value]);
+                    }
+                }
+
+                form.Add(streamContent, nameof(file), file.FileName);
+            }
+
+            var request = new HttpRequestMessage(HttpMethod.Post, $"Org/UploadFiles/{folder}/{id}")
+            {
+                Content = form,
+                Headers = {
+                    Authorization = auth.AddAuthorization()
+                }
+            };
+
+            var response = await _httpClient.SendAsync(request, cancellationToken);
+
+            response.EnsureSuccessStatusCode();
+
+            return await response.Content.ReadFromJsonAsync(CommonJsonSerializerContext.Default.ActionResult, cancellationToken);
         }
     }
 }

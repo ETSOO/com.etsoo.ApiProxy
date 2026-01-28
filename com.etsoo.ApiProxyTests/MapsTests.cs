@@ -10,6 +10,7 @@ namespace com.etsoo.ApiProxyTests
         {
             var location = new Location(3.14f, -4.18f);
             Assert.AreEqual("3.14,-4.18", location.ToString());
+            Assert.AreEqual("-4.18,3.14", location.ToLngLatString());
             Assert.AreEqual("POINT(3.14 -4.18)", location.ToSqlGeography());
         }
     }
