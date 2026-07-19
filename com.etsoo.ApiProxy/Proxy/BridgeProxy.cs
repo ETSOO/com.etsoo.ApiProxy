@@ -12,6 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Net.Http.Json;
+using System.Text;
+using System.Text.Json;
 
 namespace com.etsoo.ApiProxy.Proxy
 {
@@ -137,19 +139,20 @@ namespace com.etsoo.ApiProxy.Proxy
         /// <param name="rq">Request data</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Result</returns>
-        public async Task<GetDetailsResponse?> GetPlaceDetailsAsync(GetDetailsRQ rq, CancellationToken cancellationToken = default)
+        public async ValueTask<GetDetailsResponse?> GetPlaceDetailsAsync(GetDetailsRQ rq, CancellationToken cancellationToken = default)
         {
-            return await CacheFactory.DoAsync(
-                _cache,
-                _cacheHours,
-                () => $"{identifier}.{nameof(GetPlaceDetailsAsync)}.{rq.CreateKey()}",
-                async (typeInfo) =>
-                {
-                    var response = await _httpClient.PostAsJsonAsync("Google/GetPlaceDetails", rq, GoogleApiJsonSerializerContext.Default.GetDetailsRQ, cancellationToken);
-                    response.EnsureSuccessStatusCode();
+            var key = $"{identifier}.{nameof(GetPlaceDetailsAsync)}.{rq.CreateKey()}";
+            var bytes = await _cache.GetOrCreateAsync(key, async (options) =>
+            {
+                options.AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(_cacheHours);
 
-                    return await response.Content.ReadFromJsonAsync(typeInfo, cancellationToken: cancellationToken);
-                }, GoogleApiJsonSerializerContext.Default.GetDetailsResponse, cancellationToken: cancellationToken);
+                var response = await _httpClient.PostAsJsonAsync("Google/GetPlaceDetails", rq, GoogleApiJsonSerializerContext.Default.GetDetailsRQ, cancellationToken);
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadAsByteArrayAsync(cancellationToken);
+            }, cancellationToken);
+
+            return bytes == null || bytes.Length == 0 ? null : JsonSerializer.Deserialize(bytes, GoogleApiJsonSerializerContext.Default.GetDetailsResponse);
         }
 
         /// <summary>
@@ -161,17 +164,17 @@ namespace com.etsoo.ApiProxy.Proxy
         /// <returns>Translated text</returns>
         public async Task<string> TranslateTextAsync(TranslateTextRQ rq, CancellationToken cancellationToken = default)
         {
-            return await CacheFactory.DoStringAsync(
-                _cache,
-                _cacheHours,
-                () => $"{identifier}.{nameof(TranslateTextAsync)}.{rq.Text}.{rq.TargetLanguageCode}",
-                async () =>
-                {
-                    var response = await _httpClient.PostAsJsonAsync("Google/TranslateText", rq, GoogleApiJsonSerializerContext.Default.TranslateTextRQ, cancellationToken);
-                    response.EnsureSuccessStatusCode();
+            var key = $"{identifier}.{nameof(TranslateTextAsync)}.{rq.Text}.{rq.TargetLanguageCode}";
 
-                    return await response.Content.ReadAsStringAsync(cancellationToken: cancellationToken);
-                }, cancellationToken: cancellationToken);
+            var bytes = await _cache.GetOrCreateAsync(key, async (options) =>
+            {
+                options.AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(_cacheHours);
+                var response = await _httpClient.PostAsJsonAsync("Google/TranslateText", rq, GoogleApiJsonSerializerContext.Default.TranslateTextRQ, cancellationToken);
+                response.EnsureSuccessStatusCode();
+                return await response.Content.ReadAsByteArrayAsync(cancellationToken);
+            }, cancellationToken);
+
+            return bytes == null || bytes.Length == 0 ? string.Empty : Encoding.UTF8.GetString(bytes);
         }
     }
 }

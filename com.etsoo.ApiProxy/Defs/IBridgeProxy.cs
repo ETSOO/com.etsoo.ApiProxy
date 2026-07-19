@@ -49,7 +49,7 @@ namespace com.etsoo.ApiProxy.Defs
         /// </summary>
         /// <param name="rq">Request data</param>
         /// <returns>Result</returns>
-        Task<GetDetailsResponse?> GetPlaceDetailsAsync(GetDetailsRQ rq, CancellationToken cancellationToken = default);
+        ValueTask<GetDetailsResponse?> GetPlaceDetailsAsync(GetDetailsRQ rq, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Translate short text

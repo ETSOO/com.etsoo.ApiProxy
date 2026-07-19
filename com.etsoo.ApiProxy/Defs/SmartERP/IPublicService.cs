@@ -49,6 +49,15 @@ namespace com.etsoo.ApiProxy.Defs.SmartERP
         Task<IEnumerable<RegionItem>> GetRegionsAsync(IEnumerable<string>? ids = null, CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// Get time zones
+        /// 获取时区
+        /// </summary>
+        /// <param name="rq">Request data</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns>Result</returns>
+        Task<IEnumerable<TimeZoneItem>> GetTimeZonesAsync(TimeZoneRQ rq, CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// Parse China Pin
         /// 解析中国身份证
         /// </summary>

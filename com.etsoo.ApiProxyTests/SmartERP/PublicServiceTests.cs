@@ -60,6 +60,15 @@ namespace com.etsoo.ApiProxyTests.SmartERP
         }
 
         [TestMethod]
+        public async Task GetTimeZonesAsyncTests()
+        {
+            var rq = new TimeZoneRQ();
+            var timeZones = await _service.GetTimeZonesAsync(rq, TestContext.CancellationToken);
+            Assert.IsNotNull(timeZones);
+            Assert.IsTrue(timeZones.Any());
+        }
+
+        [TestMethod]
         public async Task ParseChinaPinTests()
         {
             var pin = "110101199003071225";

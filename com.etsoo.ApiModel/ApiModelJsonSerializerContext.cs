@@ -24,6 +24,7 @@ namespace com.etsoo.ApiModel
     [JsonSerializable(typeof(RQ.SmartERP.BarcodeSimpleOptions))]
     [JsonSerializable(typeof(RQ.SmartERP.PinyinRQ))]
     [JsonSerializable(typeof(RQ.SmartERP.TimestampKeyRQ))]
+    [JsonSerializable(typeof(RQ.SmartERP.TimeZoneRQ))]
     [JsonSerializable(typeof(RQ.SmartERP.TokenAuthRQ))]
 
     [JsonSerializable(typeof(IEnumerable<PlaceCommon>))]

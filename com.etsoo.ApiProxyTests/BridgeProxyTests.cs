@@ -35,18 +35,30 @@ namespace com.etsoo.ApiProxyTests
                     StatusCode = HttpStatusCode.NotFound
                 };
             }));
+
+            // Directly Mock.Of<IDistributedCache>() mocked object
+            // GetAsync always return empty byte[] instead of null
+            var cache = new Mock<IDistributedCache>();
+
+            cache.Setup(c => c.GetAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<CancellationToken>()))
+                .ReturnsAsync((byte[]?)null);
+
             proxy = new BridgeProxy(httpClient, Mock.Of<ILogger<BridgeProxy>>(), new OptionsWrapper<BridgeOptions>(new()
             {
                 BaseAddress = "https://localhost/api"
-            }), Mock.Of<IDistributedCache>());
+            }), cache.Object);
         }
 
         [TestMethod]
         public async Task TranslateTextAsyncSuccessTests()
         {
             var rq = new TranslateTextRQ { Text = "中国" };
-            var result = await proxy.TranslateTextAsync(rq);
+            var result = await proxy.TranslateTextAsync(rq, TestContext.CancellationToken);
             Assert.AreEqual("China", result);
         }
+
+        public TestContext TestContext { get; set; }
     }
 }

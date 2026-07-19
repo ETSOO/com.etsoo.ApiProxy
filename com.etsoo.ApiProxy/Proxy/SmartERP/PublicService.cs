@@ -92,6 +92,21 @@ namespace com.etsoo.ApiProxy.Proxy.SmartERP
         }
 
         /// <summary>
+        /// Get time zones
+        /// 获取时区
+        /// </summary>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns>Result</returns>
+        public async Task<IEnumerable<TimeZoneItem>> GetTimeZonesAsync(TimeZoneRQ rq, CancellationToken cancellationToken = default)
+        {
+            var response = await _httpClient.PostAsJsonAsync("Public/GetTimeZones", rq, ApiModelJsonSerializerContext.Default.TimeZoneRQ, cancellationToken);
+
+            response.EnsureSuccessStatusCode();
+
+            return await response.Content.ReadFromJsonAsync(CommonJsonSerializerContext.Default.IEnumerableTimeZoneItem, cancellationToken) ?? [];
+        }
+
+        /// <summary>
         /// Parse China Pin
         /// 解析中国身份证
         /// </summary>

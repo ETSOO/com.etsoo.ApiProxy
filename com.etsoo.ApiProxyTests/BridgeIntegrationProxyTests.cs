@@ -18,23 +18,33 @@ namespace com.etsoo.ApiProxyTests
         public BridgeIntegrationProxyTests()
         {
             var httpClient = new HttpClient();
+
+            // Directly Mock.Of<IDistributedCache>() mocked object
+            // GetAsync always return empty byte[] instead of null
+            var cache = new Mock<IDistributedCache>();
+
+            cache.Setup(c => c.GetAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<CancellationToken>()))
+                .ReturnsAsync((byte[]?)null);
+
             proxy = new BridgeProxy(httpClient, Mock.Of<ILogger<BridgeProxy>>(), new OptionsWrapper<BridgeOptions>(new()
             {
                 BaseAddress = "https://hkapi.etsoo.com/api/"
-            }), Mock.Of<IDistributedCache>());
+            }), cache.Object);
         }
 
         [TestMethod]
         public async Task AutoCompleteAsyncTest()
         {
-            var result = await proxy.AutoCompleteAsync(new AutocompleteRQ { Input = "12a Cranbrook" });
+            var result = await proxy.AutoCompleteAsync(new AutocompleteRQ { Input = "12a Cranbrook" }, TestContext.CancellationToken);
             Assert.IsNotNull(result);
 
             var prediction = result.Predictions.FirstOrDefault(p => p.Description.Contains("Auckland"));
             Assert.IsNotNull(prediction);
             Assert.IsNotNull(prediction.PlaceId);
 
-            var place = await proxy.GetPlaceDetailsAsync(new GetDetailsRQ { PlaceId = prediction.PlaceId });
+            var place = await proxy.GetPlaceDetailsAsync(new GetDetailsRQ { PlaceId = prediction.PlaceId }, TestContext.CancellationToken);
             Assert.IsNotNull(place?.Result);
 
             Assert.IsTrue(place.Result?.AddressComponents?.Any(ac => ac.Types.Contains("country") && ac.ShortName.Equals("NZ")));
@@ -67,8 +77,10 @@ namespace com.etsoo.ApiProxyTests
         public async Task TranslateTextAsyncSuccessTests()
         {
             var rq = new TranslateTextRQ { Text = "中国" };
-            var result = await proxy.TranslateTextAsync(rq);
+            var result = await proxy.TranslateTextAsync(rq, TestContext.CancellationToken);
             Assert.AreEqual("China", result);
         }
+
+        public TestContext TestContext { get; set; }
     }
 }

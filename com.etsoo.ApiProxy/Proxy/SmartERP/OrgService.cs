@@ -119,6 +119,7 @@ namespace com.etsoo.ApiProxy.Proxy.SmartERP
         {
             var form = new MultipartFormDataContent
             {
+                { new StringContent(folder), nameof(folder) },
                 { new StringContent(sign), nameof(sign) }
             };
 
@@ -136,7 +137,7 @@ namespace com.etsoo.ApiProxy.Proxy.SmartERP
                 form.Add(streamContent, nameof(file), file.FileName);
             }
 
-            var request = new HttpRequestMessage(HttpMethod.Post, $"Org/UploadFiles/{folder}/{id}")
+            var request = new HttpRequestMessage(HttpMethod.Post, $"Org/UploadFiles/{id}")
             {
                 Content = form,
                 Headers = {
