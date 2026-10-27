@@ -15,7 +15,7 @@
     <Description>ETSOO Api Proxy
 亿速思维接口代理</Description>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
-    <Version>1.0.64</Version>
+    <Version>1.0.65</Version>
     <AssemblyVersion>1.0.1.0</AssemblyVersion>
     <FileVersion>1.0.1.0</FileVersion>
     <PackageIcon>logo.png</PackageIcon>
@@ -32,8 +32,8 @@
 
   <ItemGroup>
     <PackageReference Include="com.etsoo.GoogleApi" Version="1.0.45" />
-    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="10.0.11" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.11" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="10.0.14" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.14" />
   </ItemGroup>
 
   <ItemGroup>
